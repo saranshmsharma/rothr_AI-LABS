@@ -1,0 +1,71 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { ArrowRight, Compass, ShieldCheck, Cpu } from "@lucide/astro";
+---
+
+<Layout
+  title="Mission — Rothr"
+  description="We're building the layer between senior design expertise and frontier models."
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="Organizing design intelligence to power the AI economy"
+      description="We're building the layer between senior design expertise and frontier models — so the AI systems shaping how billions of people interact with software are trained on signal that actually reflects good design."
+    />
+  </section>
+
+  <section class="site-container max-w-4xl mx-auto pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <!-- Pillar 1 -->
+      <div class="p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 hover:shadow-md transition-all duration-300">
+        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+          <Compass class="w-5 h-5 text-primary" />
+        </div>
+        <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">For designers</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          A new income stream that pays for the expertise you've spent years building. Async, flexible, high-signal work that fits around your life.
+        </p>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 hover:shadow-md transition-all duration-300">
+        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+          <ShieldCheck class="w-5 h-5 text-primary" />
+        </div>
+        <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">For labs</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          Access to the design-domain experts you couldn't find, vetted to the standard your training data demands.
+        </p>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 hover:shadow-md transition-all duration-300">
+        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+          <Cpu class="w-5 h-5 text-primary" />
+        </div>
+        <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">For AI</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          The human judgment that makes the difference between a model that generates interfaces and one that generates <em>good</em> interfaces.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA section -->
+    <div class="mt-16 p-8 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 text-center max-w-2xl mx-auto">
+      <h3 class="text-2xl font-brand mb-4">Ready to partner with us?</h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-6 leading-relaxed">
+        Join our growing network of vetted design experts or deploy high-fidelity evaluation signals to your engineering pipelines.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <Button url="/contact" type="fill">
+          Partner with us <ArrowRight size={16} />
+        </Button>
+        <Button url="/contact">
+          Join as an expert
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

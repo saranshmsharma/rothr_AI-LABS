@@ -1,30 +1,30 @@
 // Get site URL from environment variable, use default value if not set
 // Note: Please set the correct PUBLIC_SITE_URL in .env file after first deployment
-const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://ricoui.com';
+const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://rothr.com';
 
 export const siteConfig = {
-	title: "RicoFast",
-	author: "RicoUI",
+	title: "Rothr",
+	author: "Rothr",
 	url: SITE_URL,
-	mail: "hello@ricoui.com",
+	mail: "hello@rothr.com",
 	utm: {
 		source: `${SITE_URL}`,
 		medium: "referral",
 		campaign: "navigation",
 	},
 	meta:{
-		title: "RicoFast — A design-led SaaS template for Astro",
-		description: "A polished, open-source SaaS template built with Astro and Tailwind CSS. Modular sections, dark mode, and a documented design system.",
-		keywords: "saas template, astro template, tailwind template, startup website, landing page, indie hacker",
+		title: "Rothr — Design intelligence for frontier AI",
+		description: "Rothr mobilizes senior product designers to generate high-quality preference data, UI evaluations, and design rationale that teaches frontier models what good actually looks like.",
+		keywords: "design intelligence, AI preference data, UI evaluation, red teaming, reinforcement learning, human feedback, RLHF, UX evaluation",
 		image: `${SITE_URL}/og.jpg`,
-		twitterHandle: "",
+		twitterHandle: "rothr_ai",
 	},
 	// social links
 	social:{
-		twitter: "http://x.com/ricouii/",
-		twitterName: "RicoUI",
-		github: "https://github.com/ricocc/ricoui-saas-template",
-		blog: "https://ricoui.com",
+		twitter: "http://x.com/rothr_ai/",
+		twitterName: "rothr_ai",
+		github: "https://github.com/rothr-ai/rothr-website",
+		blog: "https://rothr.com",
 	},
 };
 

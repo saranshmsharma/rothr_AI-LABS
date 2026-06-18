@@ -1,27 +1,18 @@
 [
 	{
-		"name": "Home",
-		"url": "/"
+		"name": "For Labs",
+		"url": "/#for-labs"
 	},
 	{
-		"name": "Pages",
-		"children": [
-			{ "name": "Features", "url": "/features" },
-			{ "name": "Pricing", "url": "/pricing" },
-			{ "name": "About", "url": "/about" },
-			{ "name": "Blog", "url": "/blog" },
-			{ "name": "Changelog", "url": "/changelog" },
-			{ "name": "Sign in", "url": "/sign-in" },
-			{ "name": "Sign up", "url": "/sign-up" },
-			{ "name": "404", "url": "/404" }
-		]
+		"name": "For Designers",
+		"url": "/#for-designers"
 	},
 	{
-		"name": "Elements",
-		"url": "/elements"
+		"name": "Research",
+		"url": "/#research"
 	},
 	{
-		"name": "Contact",
-		"url": "/contact"
+		"name": "Mission",
+		"url": "/mission"
 	}
 ]

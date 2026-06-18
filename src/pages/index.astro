@@ -1,439 +1,1043 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import HeroSection from "@/components/home/HeroSection.astro";
-import SectionHeader from "@/components/elements/SectionHeader.astro";
-import Pricing from "@/components/sections/Pricing.astro";
-import FAQ from "@/components/sections/FAQ.astro";
-import BlogSection from "@/components/sections/BlogSection.astro";
 import Button from "@/components/ui/Button.astro";
-import BrowserFrame from "@/components/ui/BrowserFrame.astro";
-import TechStackCard from "@/components/cards/TechStackCard.astro";
-import { siteConfig } from "@/config/site";
 import {
-  LayoutDashboard, Layers, FileText,
-  Bot, Code, PenTool, Rocket, GitFork, ChartNoAxesColumnIncreasing,
-  ArrowRight,
-  Compass, Triangle, Sun, CircleDot, Orbit, Anvil
+  ArrowRight, Users, Check, Zap, Sparkles,
+  Layers, Database, Eye, Shield, Award, Landmark, Clock, DollarSign,
+  TrendingUp, ArrowUpRight, Target, Search, EyeOff, PenTool, Briefcase,
+  Globe as U
 } from "@lucide/astro";
 
-// FAQ data
-const faqItems = [
-  { question: "Is this template free?", answer: "Yes. RicoFast is MIT-licensed and free for both personal and commercial use. Fork it, ship with it, sell what you build on top of it — no attribution required." },
-  { question: "Do I need to know Astro to use it?", answer: "Basic HTML/CSS familiarity is enough. The template is structured so the first 90% of customization happens in three places: site.js, global.css tokens, and content directories. Most users ship without writing any new Astro components." },
-  { question: "Can I customize the design system?", answer: "Yes. Colors, fonts, spacing, and border radii are all CSS custom properties defined in src/styles/global.css. The full token reference lives in docs/DESIGN.md so you always know what to change." },
-  { question: "Where can I deploy it?", answer: "Anywhere that hosts static sites — Vercel, Netlify, Cloudflare Pages, GitHub Pages, AWS S3, or your own server. The build outputs a plain dist/ directory. Vercel and Netlify have one-click setup." },
-  { question: "How fast is it really?", answer: "Lighthouse 95+ across Performance, Accessibility, Best Practices, and SEO on a fresh install. Astro ships zero JS by default — interactive bits load only where needed." },
-  { question: "Is there support?", answer: "Yes — open an issue on GitHub. The repo is actively maintained and community contributions are welcome. The Pro/Enterprise tiers shown on the Pricing page are demo content for the template itself, not a paid plan for RicoFast." },
+// Stats bar data
+const statsBar = [
+  { value: "500+", label: "Vetted design experts" },
+  { value: "6", label: "Design domains" },
+  { value: "48hr", label: "Expert deployment" },
+  { value: "$75", label: "Avg. hourly rate" },
 ];
 
-// Features data
-const features = [
-  { icon: "/assets/icon/structure.png",  title: "Clean page structure", desc: "9 pre-built pages — Home, Features, Pricing, Blog, Changelog, About, Contact, Elements, 404 — wired and responsive out of the box." },
-  { icon: "/assets/icon/components.png", title: "Reusable sections", desc: "15+ modular section components — Hero, FeatureGrid, Pricing, FAQ, Steps, FinalCTA — composable with no layout conflicts." },
-  { icon: "/assets/icon/document.png",   title: "MDX-powered content", desc: "Blog and changelog driven by Astro 6 Content Layer. Import components inside Markdown. No CMS needed." },
-  { icon: "/assets/icon/fast.png",       title: "Lightweight and fast", desc: "Zero JS by default. Lighthouse 95+ on Performance, Accessibility, Best Practices, and SEO from a fresh install." },
-  { icon: "/assets/icon/motion.png",     title: "Built-in motion", desc: "Scroll reveals via AOS, orchestrated entrances via motion.js. Honors prefers-reduced-motion." },
-  { icon: "/assets/icon/customize.png",  title: "Easy to customize", desc: "~30 CSS custom properties drive every color and font. Rebrand in minutes by editing one file." },
+// Product Pillars data
+const productPillars = [
+  {
+    id: "preference-data",
+    icon: Database,
+    title: "Preference Data",
+    desc: "Senior designers rank and explain AI-generated UI outputs to generate RLHF training pairs grounded in real design reasoning."
+  },
+  {
+    id: "design-evals",
+    icon: Eye,
+    title: "Design Evals",
+    desc: "Structured evaluation environments where expert designers assess model outputs against accessibility, hierarchy, interaction, and craft standards."
+  },
+  {
+    id: "red-teaming",
+    icon: Shield,
+    title: "Red Teaming",
+    desc: "Designers surface failure modes in AI design tools and agents — with the vocabulary to document why the output fails and how to fix it."
+  }
 ];
 
-// Problem cards data
-const problems = [
-  { icon: "/assets/icon/clock.png",   title: "Starting fresh slows you down", desc: "Every SaaS needs the same 12 sections. Rebuilding them for every project costs weeks you should spend on the product." },
-  { icon: "/assets/icon/battery.png", title: "Generic templates devalue work", desc: "Most free templates look like templates. Your product deserves a site that feels deliberate, not stamped out." },
-  { icon: "/assets/icon/bell.png",    title: "Unstable systems break with growth", desc: "Ad-hoc colors, magic numbers, drift between pages — small inconsistencies compound until every change risks breaking something else." },
+// Problem Cards
+const labsProblems = [
+  {
+    icon: Target,
+    title: "Wrong domain, wrong signal",
+    desc: "General annotators describe what they see. Senior designers explain why it fails. The difference is the training signal your model actually needs."
+  },
+  {
+    icon: Search,
+    title: "No design-specific vetting exists",
+    desc: "Current platforms can't distinguish a 6-year enterprise UX designer from someone who completed an online course last month. You're getting noise."
+  },
+  {
+    icon: Clock,
+    title: "Months to source, days to lose",
+    desc: "By the time you've sourced, vetted, and onboarded design talent through generalist platforms, your training window has closed."
+  }
 ];
 
-// Use cases
-const useCases = [
-  { icon: Bot, label: "AI tools", desc: "Credible launch site from day one" },
-  { icon: Code, label: "Developer tools", desc: "API docs, SDK landing, dev platforms" },
-  { icon: PenTool, label: "Design tools", desc: "Creative apps and design systems" },
-  { icon: Rocket, label: "Micro SaaS", desc: "Indie projects and side hustles" },
-  { icon: GitFork, label: "Open-source", desc: "Project sites and community hubs" },
-  { icon: ChartNoAxesColumnIncreasing, label: "Analytics", desc: "Dashboards and data tools" },
+const designersProblems = [
+  {
+    icon: EyeOff,
+    title: "You're invisible to the AI training economy",
+    desc: "RLHF platforms weren't built for designers. Your domain doesn't map to their categories. Your expertise isn't captured."
+  },
+  {
+    icon: DollarSign,
+    title: "Expert judgment, annotator rates",
+    desc: "Platforms that do accept designers pay crowd wages. Six years of UX reasoning is worth more than the market currently offers."
+  },
+  {
+    icon: Layers,
+    title: "No infrastructure built for you",
+    desc: "There's no vetted path from senior designer to AI training contributor. The demand exists. The on-ramp doesn't — until now."
+  }
 ];
 
+// How It Works
+const labsSteps = [
+  { num: "01", title: "Tell us what you need", desc: "Share your task type, design domain, volume, and timeline. Self-service or through our team." },
+  { num: "02", title: "Get a vetted shortlist in 48 hours", desc: "We match and surface verified design experts against your specific requirements. No sourcing on your end." },
+  { num: "03", title: "Deploy into your environment", desc: "Experts work inside your annotation tools or Rothr's structured task workspace. No migrations, no lock-in." },
+  { num: "04", title: "Scale with confidence", desc: "Start with a 5-person pilot. Scale to production teams of 50+ with the same vetting quality and structured output format." }
+];
 
-// Logos placeholder — fictional brand wordmarks for the social-proof strip.
-// Swap with real customer logos / SVGs when shipping.
-const logos = [
-  { name: "Northwind", icon: Compass },
-  { name: "Acme", icon: Triangle },
-  { name: "Lumen", icon: Sun },
-  { name: "Helio", icon: CircleDot },
-  { name: "Orbit", icon: Orbit },
-  { name: "Forge", icon: Anvil },
+const designersSteps = [
+  { num: "01", title: "Apply in 10 minutes", desc: "Tell us your domain, seniority, and what kinds of tasks you want. No portfolio required." },
+  { num: "02", title: "Complete a reasoning assessment", desc: "We evaluate design judgment, not aesthetics. One test. No tricks." },
+  { num: "03", title: "Get matched to tasks", desc: "Rothr surfaces relevant work from labs that fit your background and schedule. You decide what to accept." },
+  { num: "04", title: "Get paid", desc: "Get paid $40–120/hr for async sessions of 30–90 minutes. Milestone-based. Transparent before you start." }
+];
+
+// Task Types
+const taskTypes = [
+  { title: "Preference Ranking", desc: "Compare two AI-generated UI variants. Choose the stronger one and explain your reasoning in design terms." },
+  { title: "UI Annotation", desc: "Mark specific failures in hierarchy, visual weight, accessibility, and interaction clarity on wireframes or mocks." },
+  { title: "Rationale Writing", desc: "Write structured design rationale that helps models learn what good looks like — and why." },
+  { title: "Red Teaming", desc: "Push AI design tools to their failure modes. Document what breaks, how it breaks, and what the right output should be." }
+];
+
+// Domains
+const domains = [
+  { name: "Enterprise / B2B UX", icon: Landmark },
+  { name: "Consumer Product Design", icon: Users },
+  { name: "Design Systems & Tokens", icon: Layers },
+  { name: "Accessibility & Inclusive Design", icon: Award },
+  { name: "Fintech & Complex Data Workflows", icon: Database },
+  { name: "AI-native Product Interfaces", icon: Zap }
+];
+
+// Stats Credibility Section
+const credibilityStats = [
+  { value: "500+", label: "Vetted design experts across 6 domains" },
+  { value: "48hr", label: "From project post to expert shortlist" },
+  { value: "$40–120/hr", label: "Expert earnings per session" },
+  { value: "10 min", label: "Designer application time" },
+  { value: "5→50+", label: "Pilot to production scaling" },
+  { value: "0", label: "Platforms you need to replace" }
 ];
 ---
 
 <Layout
-  title="RicoFast — A design-led SaaS template for Astro"
-  description="Ship your SaaS site in days, not weeks. A clean, fast, and modular open-source template built with Astro and Tailwind CSS."
-  keywords="saas template, astro template, tailwind template, startup website, indie hacker"
+  title="Rothr — Design intelligence for frontier AI"
+  description="Rothr mobilizes senior product designers to generate high-quality preference data, UI evaluations, and design rationale that teaches frontier models what good actually looks like."
+  keywords="design intelligence, AI preference data, UI evaluation, red teaming, reinforcement learning, human feedback, RLHF"
 >
 
-  <!-- 1. Hero -->
-  <HeroSection />
+  <!-- 1. HERO SECTION -->
+  <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-32 site-container overflow-hidden">
+    <!-- Ambient decorative light bursts -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+    
+    <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+      <!-- Eyebrow badge -->
+      <div
+        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 dark:border-primary-light/10 dark:bg-primary-light/5 text-xs font-semibold uppercase tracking-wider text-primary dark:text-primary-light mb-6"
+        data-aos="fade-up"
+        data-aos-once="true"
+      >
+        <Sparkles size={12} class="animate-pulse" />
+        <span>Design intelligence for frontier AI</span>
+      </div>
 
-  <!-- 2. Logo / Social Proof -->
-  <section class="py-12 md:py-16 lg:py-24 site-container" data-aos="fade-up-xs" data-aos-once="true"  data-aos-delay="650" >
-    <p class="text-center text-sm text-neutral-400 dark:text-neutral-500 mb-6">Drop in your customer logos when you launch</p>
-    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 opacity-60">
-      {logos.map((logo) => (
-        <div class="flex items-center gap-2 px-4 py-2 border border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
-          <logo.icon class="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
-          <span class="text-sm font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{logo.name}</span>
-        </div>
-      ))}
-    </div>
-  </section>
+      <!-- Headline -->
+      <h1 
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-brand text-neutral-800 dark:text-neutral-100 font-normal leading-[1.1] tracking-tight mb-6"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-once="true"
+      >
+        The expert layer between AI labs and great design.
+      </h1>
 
-  <!-- 3. Problem -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Most SaaS sites start with the wrong problems" description="The hard part isn't building features. It's building a site that doesn't feel generic, doesn't drift apart over time, and doesn't take a month of weekends." />
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-      {problems.map((problem, i) => (
-        <div
-          class="p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-        >
-          <img
-            src={problem.icon}
-            alt={problem.title}
-            loading="lazy"
-            width="64"
-            height="64"
-            class="w-16 h-16 mb-4 object-contain"
-          />
-          <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">{problem.title}</h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{problem.desc}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 4. Solution -->
-  <section class="py-8 md:py-12 site-container" data-aos="fade-up-xs" data-aos-once="true">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4">A design system, not just a template</h2>
-      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
-        RicoFast is built on a documented token system — colors, type scale, spacing, motion — so every page you add stays coherent with the ones already shipped. Less arbitration, fewer regressions, more time on the product.
+      <!-- Subtext -->
+      <p 
+        class="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-3xl mb-10"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-once="true"
+      >
+        Rothr mobilizes senior product designers to generate high-quality preference data, UI evaluations, and design rationale that teaches frontier models what good actually looks like.
       </p>
-    </div>
-    <div class="mt-10 md:mt-12 flex flex-wrap justify-center items-end gap-4 sm:gap-6 md:gap-8">
-      {[
-        { name: 'blue', file: 'folder-blue.webp' },
-        { name: 'yellow', file: 'folder-yellow.webp' },
-        { name: 'green', file: 'folder-greean.webp' },
-        { name: 'red', file: 'folder-red.webp' },
-        { name: 'gray', file: 'folder-gray.webp' },
-      ].map((folder, i) => (
-        <div
-          data-aos="fade-up-xs"
-          data-aos-delay={i * 120}
-          data-aos-once="true"
-          class="inline-block"
-        >
-          <img
-            src={`/assets/folder/${folder.file}`}
-            alt={`${folder.name} folder`}
-            width="128"
-            height="128"
-            class="w-20 sm:w-24 md:w-28 lg:w-32 h-auto drop-shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:drop-shadow-lg"
-          />
-        </div>
-      ))}
-    </div>
-  </section>
 
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 5. Features Grid -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Everything you need, nothing you don't" description="A focused set of features built for real SaaS sites. No bloat, no half-finished add-ons." />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {features.map((feature, i) => (
-        <div
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-          class="h-full"
-        >
-          <div
-            class="h-full p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border transition-all duration-300 ease-in-out border-primary/10 dark:border-neutral-700 hover:shadow-md hover:-translate-y-1"
-          >
-            <img
-              src={feature.icon}
-              alt={feature.title}
-              loading="lazy"
-              width="64"
-              height="64"
-              class="w-16 h-16 mb-4 object-contain"
-            />
-            <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">{feature.title}</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{feature.desc}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 6. Product Preview -->
-  <section class="py-16 md:py-24 site-container" data-aos="fade-up-sm" data-aos-once="true">
-    <SectionHeader title="A full layout system, not just sections" description="Hero, features, pricing, dashboards, settings — every page is composed from the same token system, so the whole product feels coherent." />
-    <div class="mt-8 max-w-4xl mx-auto" data-aos="fade-up-sm" data-aos-once="true" data-aos-delay="300">
-      <BrowserFrame url="app.ricoui.com/dashboard">
-        <div class="flex h-[300px] md:h-[400px]">
-          <!-- Sidebar -->
-          <aside class="hidden sm:flex flex-col w-14 md:w-16 border-r border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/40 py-4 px-2 md:px-3 gap-2">
-            <div class="w-7 h-7 mx-auto rounded-md bg-primary/15 border border-primary/30 flex items-center justify-center mb-2">
-              <div class="w-2.5 h-2.5 rounded-sm bg-primary"></div>
-            </div>
-            <div class="app-nav-active relative w-full h-8 rounded-md bg-primary/15 border border-primary/30 flex items-center justify-center">
-              <LayoutDashboard class="w-3.5 h-3.5 text-primary" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <Layers class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <FileText class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <ChartNoAxesColumnIncreasing class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="flex-1"></div>
-            <div class="w-7 h-7 mx-auto rounded-full bg-accent/40 border border-accent/60"></div>
-          </aside>
-
-          <!-- Main -->
-          <div class="flex-1 p-4 md:p-6 flex flex-col gap-4 overflow-hidden">
-            <!-- Toolbar -->
-            <div class="flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <div>
-                  <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 leading-none">Overview</h3>
-                  <p class="text-[10px] text-neutral-400 mt-1">Last 30 days</p>
-                </div>
-                <span class="hidden md:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/5">
-                  <span class="app-live-dot relative w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  <span class="text-[9px] uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-medium">Live</span>
-                </span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="hidden md:block w-32 h-7 rounded-md border border-neutral-200 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40"></div>
-                <div class="w-7 h-7 rounded-full bg-primary/20 border border-primary/30"></div>
-              </div>
-            </div>
-
-            <!-- Stat row -->
-            <div class="grid grid-cols-3 gap-2 md:gap-3">
-              {[
-                { label: "Revenue", value: "$48.2k", delta: "+22.1%" },
-                { label: "New users", value: "1,284", delta: "+8.4%" },
-                { label: "MRR", value: "$12.6k", delta: "+5.2%" },
-              ].map((s, i) => (
-                <div
-                  class="app-stat-card relative overflow-hidden rounded-md border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 p-2 md:p-3"
-                  style={`--shimmer-delay: ${i * 1.2}s;`}
-                >
-                  <span class="block text-[9px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{s.label}</span>
-                  <span class="block text-sm md:text-base font-brand text-neutral-800 dark:text-neutral-100 mt-1">{s.value}</span>
-                  <span class="block text-[9px] text-emerald-600 dark:text-emerald-400 mt-1">{s.delta}</span>
-                </div>
-              ))}
-            </div>
-
-            <!-- Table mock -->
-            <div class="flex-1 rounded-md border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 overflow-hidden">
-              <div class="grid grid-cols-12 gap-2 px-3 py-2 border-b border-primary/10 dark:border-neutral-700 text-[9px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                <span class="col-span-5">Customer</span>
-                <span class="col-span-3">Plan</span>
-                <span class="col-span-2">Status</span>
-                <span class="col-span-2 text-right">MRR</span>
-              </div>
-              {[1, 2, 3, 4].map((i) => (
-                <div class:list={["grid grid-cols-12 gap-2 items-center px-3 py-2 border-b border-primary/5 dark:border-neutral-700/40 last:border-0", i === 1 && "app-row-cursor"]}>
-                  <div class="col-span-5 flex items-center gap-2">
-                    <div class={`w-5 h-5 rounded-full ${i % 2 === 0 ? 'bg-primary/30' : 'bg-accent/40'}`}></div>
-                    <div
-                      class="app-customer-bar h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-600"
-                      style={`width: ${[60, 72, 50, 64][i - 1]}%; animation-delay: ${(i - 1) * 750}ms;`}
-                    ></div>
-                    {i === 1 && <span class="app-blink-cursor inline-block w-[2px] h-3 bg-primary"></span>}
-                  </div>
-                  <div class="col-span-3">
-                    <div class="inline-block px-1.5 py-0.5 rounded text-[9px] bg-primary/10 text-primary">{['Pro', 'Team', 'Pro', 'Enterprise'][i - 1]}</div>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="inline-flex items-center gap-1">
-                      <div class={`w-1.5 h-1.5 rounded-full ${i === 3 ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
-                      <span class="text-[9px] text-neutral-500 dark:text-neutral-400">{i === 3 ? 'Trial' : 'Active'}</span>
-                    </div>
-                  </div>
-                  <div class="col-span-2 text-right text-[10px] font-medium text-neutral-700 dark:text-neutral-200">${[148, 89, 49, 290][i - 1]}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </BrowserFrame>
-      <p class="text-center text-xs text-neutral-400 dark:text-neutral-500 mt-4">Replace this mock with your own product screenshot — see <code class="text-primary">src/pages/index.astro</code>.</p>
-    </div>
-  </section>
-
-  <!-- 7. Use Cases -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Made for different kinds of SaaS" description="Whether you're shipping an AI tool, a developer platform, or an indie side project — the layout system adapts to your product." />
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-8" >
-      {useCases.map((uc, i) => (
-        <div
-          class="flex flex-col items-center p-4 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 120}
-          data-aos-once="true"
-        >
-          <uc.icon class="w-6 h-6 text-primary mb-2" />
-          <span class="text-sm font-semibold text-neutral-800 dark:text-neutral-100">{uc.label}</span>
-          <span class="text-xs text-neutral-400 mt-1">{uc.desc}</span>
-        </div>
-      ))}
-    </div>
-  </section>
-
-
-
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 9. Tech Stack -->
-  <section class="py-16 md:py-24 site-container" data-aos="fade-up-sm" data-aos-once="true">
-    <SectionHeader title="Built with modern tools" />
-    <div class="mt-8" data-aos="fade-up-sm" data-aos-once="true" data-aos-delay="300">
-      <TechStackCard />
-    </div>
-  </section>
-
-  <!-- 10. Pricing -->
-  <Pricing
-    title="Free template, real pricing examples"
-    description="RicoFast itself is MIT-licensed and free. The 3-tier layout below is reference content — swap in your own plans when you launch."
-  />
-
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 11. FAQ -->
-  <FAQ
-    title="Frequently asked questions"
-    items={faqItems}
-  />
-
-  <!-- 12. Latest Articles -->
-  <div class="py-16 md:py-24">
-    <BlogSection title="Latest articles" />
-  </div>
-
-  <!-- 13. Final CTA -->
-  <section class="py-12 md:py-20 site-container  rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10" data-aos="fade-up-xs" data-aos-once="true">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="200" >Start building your SaaS today</h2>
-      <p class="text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="300">
-        Clone the template, replace the content, ship to production. Three steps to a live site.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="400">
-        <Button url={siteConfig.social.github} type="fill" className="text-lg px-8 py-3" target="_blank">
-          Get Template <ArrowRight size={18} />
+      <!-- CTAs -->
+      <div 
+        class="flex flex-wrap justify-center gap-4 mb-16"
+        data-aos="fade-up"
+        data-aos-delay="300"
+        data-aos-once="true"
+      >
+        <Button url="https://airtable.com/appqqzliZuiI7PfV9/pagndaAdD7dCgazFF/form" type="fill" className="text-base px-8 py-3.5 flex items-center gap-2">
+          Partner with us <ArrowRight size={16} />
         </Button>
-        <Button url="/features" className="text-lg px-8 py-3">
-          View Features
+        <Button url="/contact" type="outline" className="text-base px-8 py-3.5">
+          Join as an expert
         </Button>
+      </div>
+
+      <!-- Stats bar -->
+      <div 
+        class="w-full max-w-3xl grid grid-cols-2 md:grid-cols-4 gap-6 p-6 rounded-2xl bg-bg-secondary/60 dark:bg-bg-secondary-dark/60 border border-primary/10 dark:border-neutral-800 backdrop-blur-md"
+        data-aos="fade-up"
+        data-aos-delay="400"
+        data-aos-once="true"
+      >
+        {statsBar.map((stat) => (
+          <div class="text-center">
+            <span class="block text-2xl md:text-3xl font-bold font-sans text-neutral-800 dark:text-neutral-100">{stat.value}</span>
+            <span class="block text-xs text-neutral-500 dark:text-neutral-400 mt-1 font-medium">{stat.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-</Layout>
+  <!-- GLOBE VISUAL SECTION WITH OVERLAYS -->
+  <section class="relative py-12 site-container overflow-hidden border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <!-- Globe background wireframe vector -->
+    <svg viewBox="0 0 800 400" class="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] opacity-15 dark:opacity-25 pointer-events-none -z-10 text-primary-light">
+      <defs>
+        <radialGradient id="globe-glow" cx="50%" cy="100%" r="50%">
+          <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="var(--color-bg-primary)" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <!-- Globe glow base -->
+      <ellipse cx="400" cy="400" rx="320" ry="320" fill="url(#globe-glow)" />
+      <!-- Dotted grid circles -->
+      <ellipse cx="400" cy="400" rx="280" ry="280" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <ellipse cx="400" cy="400" rx="240" ry="240" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <ellipse cx="400" cy="400" rx="200" ry="200" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <ellipse cx="400" cy="400" rx="160" ry="160" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <ellipse cx="400" cy="400" rx="120" ry="120" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      
+      <!-- Longitude arcs -->
+      <path d="M 120 400 A 280 280 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <path d="M 120 400 A 280 200 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <path d="M 120 400 A 280 120 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      <path d="M 120 400 A 280 40 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+<path d="M 120 400 A 280 20 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+<path d="M 120 400 A 280 60 0 0 1 680 400" fill="none" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+      
+      <!-- vertical center lines -->
+      <line x1="400" y1="120" x2="400" y2="400" stroke="currentColor" stroke-dasharray="4 8" stroke-width="1" />
+    </svg>
 
-<style>
-  /* ─── App preview — Live ping dot ─────────────────── */
-  .app-live-dot::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 9999px;
-    background: rgb(16, 185, 129);
-    animation: app-live-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  @keyframes app-live-ping {
-    0%   { transform: scale(1);   opacity: 0.7; }
-    80%, 100% { transform: scale(2.8); opacity: 0; }
-  }
+    <div aria-hidden="true" role="presentation" class="relative h-[320px] w-full select-none overflow-y-clip sm:h-[360px] lg:h-115">
+      <div class="pointer-events-none absolute inset-0">
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 6.245865978375953deg; left: 50%; top: 116.471%; animation-delay: 3.99475s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 131.04282817835525deg; left: 50%; top: 116.471%; animation-delay: 3.22311s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 302.43269691310957deg; left: 50%; top: 116.471%; animation-delay: 2.51537s; animation-duration: 6s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 322.81365537230096deg; left: 50%; top: 116.471%; animation-delay: 0.544815s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 38.673582425886956deg; left: 50%; top: 116.471%; animation-delay: 4.62046s; animation-duration: 8s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 174.27346825449015deg; left: 50%; top: 116.471%; animation-delay: 4.59084s; animation-duration: 6s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 108.27030470653179deg; left: 50%; top: 116.471%; animation-delay: 2.68311s; animation-duration: 9s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 187.2953187468459deg; left: 50%; top: 116.471%; animation-delay: 0.722656s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 269.3202739476849deg; left: 50%; top: 116.471%; animation-delay: 1.27801s; animation-duration: 9s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 192.12359155030626deg; left: 50%; top: 116.471%; animation-delay: 4.12198s; animation-duration: 6s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 343.2223978160444deg; left: 50%; top: 116.471%; animation-delay: 2.77895s; animation-duration: 8s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 339.1529212498331deg; left: 50%; top: 116.471%; animation-delay: 0.981138s; animation-duration: 8s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 17.325491837662028deg; left: 50%; top: 116.471%; animation-delay: 2.83109s; animation-duration: 9s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 358.75814959805865deg; left: 50%; top: 116.471%; animation-delay: 0.548969s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 106.62870279311905deg; left: 50%; top: 116.471%; animation-delay: 3.83419s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 276.01671712278886deg; left: 50%; top: 116.471%; animation-delay: 1.71646s; animation-duration: 8s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 206.76516867957346deg; left: 50%; top: 116.471%; animation-delay: 1.50142s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 160.18022939291959deg; left: 50%; top: 116.471%; animation-delay: 1.95814s; animation-duration: 5s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 77.01641754040732deg; left: 50%; top: 116.471%; animation-delay: 3.94088s; animation-duration: 9s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 114.94455870456751deg; left: 50%; top: 116.471%; animation-delay: 1.79683s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 113.41526575045951deg; left: 50%; top: 116.471%; animation-delay: 4.33373s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 310.1243156370844deg; left: 50%; top: 116.471%; animation-delay: 1.88844s; animation-duration: 8s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 138.72999184335006deg; left: 50%; top: 116.471%; animation-delay: 1.15232s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 350.57586885464247deg; left: 50%; top: 116.471%; animation-delay: 2.5223s; animation-duration: 6s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 73.62090540576125deg; left: 50%; top: 116.471%; animation-delay: 0.808653s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 71.89573017256707deg; left: 50%; top: 116.471%; animation-delay: 4.43836s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 123.98645288765441deg; left: 50%; top: 116.471%; animation-delay: 3.85232s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 240.49842936561998deg; left: 50%; top: 116.471%; animation-delay: 0.0221721s; animation-duration: 6s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 204.8401368453703deg; left: 50%; top: 116.471%; animation-delay: 1.83647s; animation-duration: 7s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+        <span class="animate-meteor-outward pointer-events-none absolute z-[1] size-1.5 rounded-full bg-primary" style="--angle: 69.75057183824123deg; left: 50%; top: 116.471%; animation-delay: 1.1995s; animation-duration: 10s;"><div class="pointer-events-none absolute top-1/2 -z-10 h-[2px] w-[80px] -translate-y-1/2 bg-gradient-to-r from-primary/80 to-transparent"></div></span>
+      </div>
+<div id="globeContainer" class="relative w-full h-[320px] sm:h-[360px] lg:h-[480px] z-0"></div>
+<script type="module" is:inline>
+import * as THREE from "https://esm.sh/three@0.136.0";
+import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/controls/OrbitControls";
+import { CSS2DRenderer, CSS2DObject } from "https://esm.sh/three@0.136.0/examples/jsm/renderers/CSS2DRenderer.js";
 
-  /* ─── Active sidebar item — focus ring pulse ─────── */
-  .app-nav-active::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 10px;
-    border: 1px solid var(--color-primary);
-    opacity: 0;
-    animation: app-nav-ring 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    pointer-events: none;
-  }
-  @keyframes app-nav-ring {
-    0%        { opacity: 0;    transform: scale(0.96); }
-    50%       { opacity: 0.65; transform: scale(1.05); }
-    100%      { opacity: 0;    transform: scale(1.12); }
-  }
+const container = document.getElementById('globeContainer');
+if (!container) {
+  console.error('Globe container not found');
+  // Exit if container missing
+} else {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
+  camera.position.set(0.5, 0.5, 1).setLength(14);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
 
-  /* ─── Stat cards — staggered shimmer sweep ────────── */
-  .app-stat-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 0%,
-      transparent 35%,
-      rgba(45, 109, 195, 0.18) 50%,
-      transparent 65%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    animation: app-stat-shimmer 4.5s ease-in-out infinite;
-    animation-delay: var(--shimmer-delay, 0s);
-    pointer-events: none;
-  }
-  @keyframes app-stat-shimmer {
-    0%        { transform: translateX(-100%); }
-    35%, 100% { transform: translateX(100%);  }
-  }
+  const labelRenderer = new CSS2DRenderer();
+  labelRenderer.setSize(container.clientWidth, container.clientHeight);
+  labelRenderer.domElement.style.position = 'absolute';
+  labelRenderer.domElement.style.top = '0';
+  container.appendChild(labelRenderer.domElement);
 
-  /* ─── Table — typing cursor on first row ─────────── */
-  .app-blink-cursor {
-    animation: app-blink 1.05s steps(2, start) infinite;
-  }
-  @keyframes app-blink {
-    to { visibility: hidden; }
-  }
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    labelRenderer.setSize(w, h);
+  });
 
-  /* ─── Customer bars — staggered "live data" flux ── */
-  .app-customer-bar {
-    transform-origin: left center;
-    animation: app-bar-flux 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-  @keyframes app-bar-flux {
-    0%, 100% { transform: scaleX(1);    opacity: 1; }
-    35%      { transform: scaleX(0.72); opacity: 0.78; }
-    70%      { transform: scaleX(1.06); opacity: 1; }
-  }
+  const controls = new OrbitControls(camera, labelRenderer.domElement);
+  controls.enableDamping = true;
 
-  @media (prefers-reduced-motion: reduce) {
-    .app-live-dot::before,
-    .app-nav-active::after,
-    .app-stat-card::before,
-    .app-blink-cursor,
-    .app-customer-bar {
-      animation: none !important;
+  // Simple wireframe globe
+  const globeGeo = new THREE.SphereGeometry(5, 64, 64);
+  const globeMat = new THREE.MeshBasicMaterial({ color: 0x2266aa, wireframe: true });
+  const globe = new THREE.Mesh(globeGeo, globeMat);
+  scene.add(globe);
+
+  // Example marker
+  const markerGeo = new THREE.SphereGeometry(0.1, 16, 16);
+  const markerMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  const marker = new THREE.Mesh(markerGeo, markerMat);
+  marker.position.set(5, 0, 0);
+  scene.add(marker);
+
+  const labelDiv = document.createElement('div');
+  labelDiv.className = 'bg-white dark:bg-black text-black dark:text-white p-2 rounded shadow-lg';
+  labelDiv.textContent = 'Role: Engineer';
+  const label = new CSS2DObject(labelDiv);
+  label.position.copy(marker.position);
+  scene.add(label);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    globe.rotation.y += 0.001;
+    controls.update();
+    renderer.render(scene, camera);
+    labelRenderer.render(scene, camera);
+  }
+  animate();
+}
+</script>
+
+      
+      <!-- DESKTOP CARDS -->
+      <div class="hidden lg:block">
+        <!-- Top Left Card: Hire Experts -->
+        <div class="absolute top-[6%] left-[12%] z-10">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 space-y-1.5 p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <Briefcase size={12} />
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-sans">Vetted Experts</span>
+              </div>
+              <div class="relative h-[88px]">
+                <div class="absolute inset-0 space-y-1.5">
+                  <p class="text-sm font-semibold leading-tight font-sans text-neutral-800 dark:text-neutral-100">Consumer Product UX</p>
+                  <div class="flex items-center">
+                    <div class="flex -space-x-1.5">
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-primary text-[8px] font-bold text-white uppercase">AM</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-accent text-[8px] font-bold text-neutral-800 uppercase">TL</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-neutral-600 text-[8px] font-bold text-white uppercase">SK</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-emerald-600 text-[8px] font-bold text-white uppercase">JD</span>
+                    </div>
+                    <span class="ml-1.5 text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-sans">+4,816</span>
+                  </div>
+                  <div class="flex gap-1 overflow-hidden">
+                    <span class="inline-flex items-center justify-center tracking-tight rounded-sm border border-primary/10 dark:border-neutral-800 px-3 py-0.75 font-medium text-[10px] text-neutral-800 dark:text-neutral-200 bg-bg-primary dark:bg-bg-primary-dark">Enterprise UX</span>
+                    <span class="inline-flex items-center justify-center tracking-tight rounded-sm border border-primary/10 dark:border-neutral-800 px-3 py-0.75 font-medium text-[10px] text-neutral-800 dark:text-neutral-200 bg-bg-primary dark:bg-bg-primary-dark">Design System</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center gap-1">
+                <div class="size-1.5 rounded-full bg-primary"></div>
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Right Card: Live Opportunities -->
+        <div class="absolute top-[6%] right-[12%] z-10">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 overflow-hidden p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="mb-2 flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <U size={12} />
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-sans">Live Opportunities</span>
+                  <span class="relative flex size-1.5"><span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span></span>
+                </div>
+              </div>
+              <div class="relative h-[84px]">
+                <div class="absolute inset-0 space-y-1.5">
+                  <h3 class="truncate text-sm font-semibold leading-tight font-sans text-neutral-800 dark:text-neutral-100">UI Evaluation Lead</h3>
+                  <p class="text-[11px] text-neutral-500 dark:text-neutral-400 font-sans">Rothr Workspace · Contract</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="inline-flex items-center justify-center rounded-sm border border-primary/15 px-2 py-0.5 text-[9px] font-semibold bg-primary/5 text-primary dark:text-primary-light font-sans">$85-120/hr</span>
+                    <span class="inline-flex items-center justify-center rounded-sm border border-neutral-300 dark:border-neutral-700 px-2 py-0.5 text-[9px] text-neutral-500 dark:text-neutral-400 font-sans font-medium">Heuristics</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center gap-1">
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+                <div class="size-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700"></div>
+                <div class="size-1.5 rounded-full bg-primary"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Left Card: Paid This Week -->
+        <div class="absolute top-[46%] left-[6%] z-10">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-44 space-y-1.5 p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="flex items-center gap-1.5">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <TrendingUp size={12} />
+                </div>
+                <span class="text-[10px] font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-sans">Payouts</span>
+              </div>
+              <div class="relative h-[52px]">
+                <div class="absolute inset-0 space-y-0.5">
+                  <p class="text-xl font-semibold tracking-tight text-neutral-800 dark:text-neutral-100 font-sans">$450K</p>
+                  <p class="text-[11px] leading-tight text-neutral-500 dark:text-neutral-400 font-sans">earned by design experts this month</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="h-1 flex-1 rounded-full bg-neutral-200 dark:bg-neutral-700"><div class="h-1 rounded-full bg-primary" style="width: 92%;"></div></div>
+                <span class="text-[10px] text-neutral-500 dark:text-neutral-400 font-sans">92%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Right Card: Job Feed scroll -->
+        <div class="absolute top-[44%] right-[6%] z-10">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="mb-2 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                    <Database size={12} />
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-sans">Evaluations</span>
+                    <span class="relative flex size-1.5"><span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span></span>
+                  </div>
+                </div>
+                <span class="rounded-full border border-primary/10 px-1.5 py-0.5 text-[8px] font-medium text-neutral-500 dark:text-neutral-400 font-sans">6 Domains</span>
+              </div>
+              <div class="relative overflow-hidden h-[120px]">
+                <div class="animate-job-scroll space-y-1.5">
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-emerald-500"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">AI Design Red Teamer</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$85/hr</span></div>
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-primary"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">Heuristics Annotator</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$65/hr</span></div>
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-accent"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">UI Preference Auditor</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$70/hr</span></div>
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-neutral-600"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">Design System Specialist</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$90/hr</span></div>
+                  <!-- Duplicate feed for loop scrolling scroll -->
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-emerald-500"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">AI Design Red Teamer</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$85/hr</span></div>
+                  <div class="flex items-center gap-2 py-1 border-b border-primary/5"><div class="size-1.5 shrink-0 rounded-full bg-primary"></div><span class="flex-1 truncate text-[11px] text-neutral-700 dark:text-neutral-300 font-sans">Heuristics Annotator</span><span class="shrink-0 text-[10px] font-semibold text-primary dark:text-primary-light">$65/hr</span></div>
+                </div>
+              </div>
+              <div class="mt-2 text-center text-[9px] text-neutral-500 dark:text-neutral-400 font-sans">245 sessions this week</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLET CARDS (Scaled 0.8) -->
+      <div class="hidden max-lg:block max-sm:hidden">
+        <!-- Top Left -->
+        <div class="absolute top-3 left-1 z-10 origin-top-left scale-[0.8]">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 space-y-1.5 p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <Briefcase size={12} />
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 font-sans">Vetted Experts</span>
+              </div>
+              <div class="relative h-[88px]">
+                <div class="absolute inset-0 space-y-1.5">
+                  <p class="text-sm font-semibold leading-tight text-neutral-800 dark:text-neutral-100 font-sans">Consumer Product UX</p>
+                  <div class="flex items-center">
+                    <div class="flex -space-x-1.5">
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-primary text-[8px] font-bold text-white uppercase">AM</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-accent text-[8px] font-bold text-neutral-800 uppercase">TL</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-neutral-600 text-[8px] font-bold text-white uppercase">SK</span>
+                      <span class="relative flex shrink-0 items-center justify-center rounded-full size-6 ring-2 ring-bg-secondary dark:ring-bg-secondary-dark bg-emerald-600 text-[8px] font-bold text-white uppercase">JD</span>
+                    </div>
+                    <span class="ml-1.5 text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-sans">+4,816</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Top Right -->
+        <div class="absolute top-3 right-1 z-10 origin-top-right scale-[0.8]">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 overflow-hidden p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="mb-2 flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <U size={12} />
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 font-sans font-medium">Opportunities</span>
+              </div>
+              <div class="relative h-[84px]">
+                <div class="absolute inset-0 space-y-1.5">
+                  <h3 class="truncate text-sm font-semibold leading-tight font-sans text-neutral-800 dark:text-neutral-100 font-medium">UI Evaluation Lead</h3>
+                  <p class="text-[11px] text-neutral-500 dark:text-neutral-400 font-sans">Contract · $85-120/hr</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE CARDS (Scaled 0.65) -->
+      <div class="sm:hidden">
+        <div class="absolute top-3 left-1 z-10 origin-top-left scale-[0.65]">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 space-y-1.5 p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <Briefcase size={12} />
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 font-sans font-medium">Vetted Experts</span>
+              </div>
+              <p class="text-sm font-semibold leading-tight text-neutral-805 dark:text-neutral-100 font-sans font-medium">UI/UX Experts</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="absolute top-3 right-1 z-10 origin-top-right scale-[0.65]">
+          <div class="rounded-lg p-[1.5px] bg-gradient-to-br from-neutral-200/50 to-neutral-200/10 dark:from-neutral-800/40 dark:to-neutral-800/10 shadow-lg">
+            <div class="rounded-[6px] w-56 overflow-hidden p-3 text-left bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800">
+              <div class="mb-2 flex items-center gap-2">
+                <div class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary dark:text-primary-light">
+                  <U size={12} />
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 font-sans font-medium">Opportunities</span>
+              </div>
+              <h3 class="truncate text-sm font-semibold leading-tight text-neutral-805 dark:text-neutral-100 font-sans font-medium">UI Evaluation Lead</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Center-Bottom Status Bar/Pill -->
+    <div class="flex justify-center mt-8 md:-mt-4 relative z-20">
+      <div class="inline-flex flex-wrap items-center justify-center gap-3 md:gap-5 px-6 py-3 rounded-full border border-primary/15 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70 backdrop-blur-md text-[11px] text-neutral-600 dark:text-neutral-300 font-medium font-sans shadow-[0_8px_30px_rgb(0,0,0,0.04)] font-medium">
+        <span><strong>500+</strong> Design Experts</span>
+        <span class="hidden sm:inline h-3 w-px bg-neutral-300 dark:bg-neutral-700"></span>
+        <span><strong>6</strong> Design Domains</span>
+        <span class="hidden sm:inline h-3 w-px bg-neutral-300 dark:bg-neutral-700"></span>
+        <span><strong>48hr</strong> Deployment</span>
+        <span class="hidden sm:inline h-3 w-px bg-neutral-300 dark:bg-neutral-700"></span>
+        <span><strong>$40–120/hr</strong> Rates</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PRODUCT PILLARS (micro1-style, 3 cards) -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">Rothr Intelligence</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base">
+        We're building the infrastructure for design-domain AI training — through expert human judgment, structured evaluation environments, and scalable preference data pipelines.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {productPillars.map((pillar, i) => (
+        <div
+          id={pillar.id}
+          class="group p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 hover:border-primary/30 dark:hover:border-primary-light/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+          data-aos="fade-up"
+          data-aos-delay={i * 100}
+          data-aos-once="true"
+        >
+          <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+            <pillar.icon size={20} />
+          </div>
+          <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">{pillar.title}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">{pillar.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. MISSION STATEMENT (Mercor-style founder note) -->
+  <section id="mission" class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850 bg-neutral-50/50 dark:bg-neutral-900/10 rounded-3xl">
+    <div class="max-w-3xl mx-auto p-6 md:p-10 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-neutral-900/40 border border-primary/15 dark:border-neutral-800 relative">
+      <!-- Decorative giant quote icon -->
+      <span class="absolute top-4 right-8 text-8xl text-primary/5 font-serif select-none">“</span>
+      
+      <h3 class="text-xs uppercase tracking-widest text-primary dark:text-primary-light font-bold mb-6 font-sans">A note from Saransh</h3>
+      
+      <div class="space-y-6 text-neutral-700 dark:text-neutral-300 text-sm sm:text-base leading-relaxed font-sans font-medium">
+        <p>
+          We built Rothr because we believe design expertise is the most underrepresented signal in the AI training economy.
+        </p>
+        <p>
+          The labs building the next generation of creative AI are racing to capture human preference data. The bottleneck isn't compute, and it isn't intent — it's access to people who can tell the difference between a UI that works and one that merely renders.
+        </p>
+        <p class="border-l-2 border-primary/30 pl-4 italic bg-primary/5 py-1 dark:bg-primary-light/5">
+          That gap is where Rothr lives.
+        </p>
+        <p>
+          We organize design intelligence — the judgment that comes from years of shipping enterprise products, navigating complex user flows, and knowing when something <em>feels</em> wrong before you can explain why. We turn that judgment into structured, scalable training signal for the labs that need it most.
+        </p>
+        <p>
+          As AI gets more capable, design expertise gets more valuable. We're building the company that makes that true.
+        </p>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-primary/10 dark:border-neutral-800 flex justify-between items-center">
+        <div>
+          <span class="block font-brand text-xl text-neutral-800 dark:text-neutral-100 font-semibold">— Saransh</span>
+          <span class="block text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">Founder · Rothr</span>
+        </div>
+        <div class="w-10 h-10 rounded-full border border-primary/10 bg-primary/5 flex items-center justify-center">
+          <span class="font-bold text-xs text-primary dark:text-primary-light">SS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PROBLEM SECTION -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">AI can generate interfaces. It still can't tell if they're good.</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base">
+        The gap between output and quality is where your models are losing ground — and it's a data problem, not a compute problem.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Labs Column -->
+      <div id="for-labs" class="space-y-6" data-aos="fade-right" data-aos-once="true">
+        <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 border-b border-primary/15 dark:border-neutral-800 pb-3 flex items-center gap-2 font-sans">
+          <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+          For Labs
+        </h3>
+        
+        <div class="space-y-4">
+          {labsProblems.map((prob) => (
+            <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 dark:hover:border-neutral-750 transition-colors">
+              <div class="flex items-start gap-4">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <prob.icon size={20} />
+                </div>
+                <div>
+                  <h4 class="font-semibold text-neutral-800 dark:text-neutral-100 font-sans text-sm">{prob.title}</h4>
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed font-sans">{prob.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Designers Column -->
+      <div id="for-designers" class="space-y-6" data-aos="fade-left" data-aos-once="true">
+        <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 border-b border-primary/15 dark:border-neutral-800 pb-3 flex items-center gap-2 font-sans">
+          <span class="w-2.5 h-2.5 rounded-full bg-accent"></span>
+          For Designers
+        </h3>
+        
+        <div class="space-y-4">
+          {designersProblems.map((prob) => (
+            <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-accent/30 transition-colors">
+              <div class="flex items-start gap-4">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent dark:bg-accent/15 dark:text-accent-light">
+                  <prob.icon size={20} />
+                </div>
+                <div>
+                  <h4 class="font-semibold text-neutral-800 dark:text-neutral-100 font-sans text-sm">{prob.title}</h4>
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed font-sans">{prob.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HOW IT WORKS -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">How it works</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base">
+        A structured, reliable protocol for both frontier labs and design contributors.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <!-- Labs path -->
+      <div class="space-y-8" data-aos="fade-up" data-aos-once="true">
+        <div class="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-4">
+          <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 font-sans">For Labs</h3>
+          <span class="text-xs text-primary dark:text-primary-light font-bold bg-primary/10 px-2.5 py-1 rounded">Protocol</span>
+        </div>
+        
+        <div class="relative pl-6 border-l border-dashed border-primary/25 space-y-8">
+          {labsSteps.map((step) => (
+            <div class="relative">
+              <span class="absolute -left-[37px] top-0 w-[22px] h-[22px] rounded-full bg-primary border-4 border-bg-primary dark:border-bg-primary-dark flex items-center justify-center text-[10px] text-white font-bold">{step.num}</span>
+              <div>
+                <h4 class="font-semibold text-neutral-800 dark:text-neutral-100 font-sans text-sm">{step.title}</h4>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed font-sans">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Designers path -->
+      <div class="space-y-8" data-aos="fade-up" data-aos-delay="200" data-aos-once="true">
+        <div class="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-4">
+          <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 font-sans">For Designers</h3>
+          <span class="text-xs text-accent-light bg-neutral-800 px-2.5 py-1 rounded font-bold">On-ramp</span>
+        </div>
+        
+        <div class="relative pl-6 border-l border-dashed border-neutral-700/30 space-y-8">
+          {designersSteps.map((step) => (
+            <div class="relative">
+              <span class="absolute -left-[37px] top-0 w-[22px] h-[22px] rounded-full bg-neutral-800 border-4 border-bg-primary dark:border-bg-primary-dark flex items-center justify-center text-[10px] text-white font-bold">{step.num}</span>
+              <div>
+                <h4 class="font-semibold text-neutral-800 dark:text-neutral-100 font-sans text-sm">{step.title}</h4>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed font-sans">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TASK TYPES -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">Structured tasks. Real signal.</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base max-w-xl mx-auto">
+        Every task type is built around a consistent framework — so labs get comparable output across experts, and designers get work that actually uses their expertise.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1: Preference Ranking -->
+      <div
+        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+        data-aos="fade-up"
+        data-aos-delay="0"
+        data-aos-once="true"
+      >
+        <div class="relative h-40 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=600&q=80&auto=format&fit=crop"
+            alt="Preference Ranking — designer comparing UI variants"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 inline-flex w-7 h-7 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold border border-primary/30">01</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1 justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Preference Ranking</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Compare two AI-generated UI variants. Choose the stronger one and explain your reasoning in design terms.</p>
+          </div>
+          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+        </div>
+      </div>
+
+      <!-- Card 2: UI Annotation -->
+      <div
+        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+        data-aos="fade-up"
+        data-aos-delay="80"
+        data-aos-once="true"
+      >
+        <div class="relative h-40 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80&auto=format&fit=crop"
+            alt="UI Annotation — marking interface issues"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 inline-flex w-7 h-7 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold border border-primary/30">02</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1 justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">UI Annotation</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Mark specific failures in hierarchy, visual weight, accessibility, and interaction clarity on wireframes or mocks.</p>
+          </div>
+          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+        </div>
+      </div>
+
+      <!-- Card 3: Rationale Writing -->
+      <div
+        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+        data-aos="fade-up"
+        data-aos-delay="160"
+        data-aos-once="true"
+      >
+        <div class="relative h-40 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80&auto=format&fit=crop"
+            alt="Rationale Writing — structured design documentation"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 inline-flex w-7 h-7 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold border border-primary/30">03</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1 justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Rationale Writing</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Write structured design rationale that helps models learn what good looks like — and why.</p>
+          </div>
+          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+        </div>
+      </div>
+
+      <!-- Card 4: Red Teaming -->
+      <div
+        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+        data-aos="fade-up"
+        data-aos-delay="240"
+        data-aos-once="true"
+      >
+        <div class="relative h-40 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80&auto=format&fit=crop"
+            alt="Red Teaming — stress-testing AI design tools"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 inline-flex w-7 h-7 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold border border-primary/30">04</span>
+        </div>
+        <div class="p-5 flex flex-col flex-1 justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Red Teaming</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Push AI design tools to their failure modes. Document what breaks, how it breaks, and what the right output should be.</p>
+          </div>
+          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 7. DOMAINS -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850 bg-neutral-50/50 dark:bg-neutral-900/10 rounded-3xl">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">Six domains. One standard of expertise.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-sm text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto">
+        <p class="border-r-0 md:border-r border-dashed border-neutral-300 dark:border-neutral-700 pr-0 md:pr-4">
+          <strong class="text-neutral-800 dark:text-neutral-200 block mb-1">For labs</strong>
+          Filter your expert pool by the design domain closest to your model's use case.
+        </p>
+        <p class="pl-0 md:pl-4">
+          <strong class="text-neutral-800 dark:text-neutral-200 block mb-1">For designers</strong>
+          Your specialty is the signal. We match it to the labs that need it most.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10">
+      {domains.map((dom) => (
+        <div class="flex items-center gap-4 p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/25 transition-colors">
+          <span class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center shrink-0">
+            <dom.icon size={20} />
+          </span>
+          <span class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 font-sans">{dom.name}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 8. STATS / CREDIBILITY SECTION (micro1-style bento) -->
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">The design intelligence infrastructure for frontier AI.</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base">
+        Fast, structured, and highly calibrated expert signals built for immediate deployment.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {credibilityStats.map((stat, i) => (
+        <div
+          class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm flex flex-col justify-between min-h-[140px] hover:shadow-md hover:border-primary/20 transition-all duration-300"
+          data-aos="fade-up"
+          data-aos-delay={i * 80}
+          data-aos-once="true"
+        >
+          <span class="text-4xl font-bold font-sans tracking-tight text-primary dark:text-primary-light">{stat.value}</span>
+          <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-450 leading-relaxed mt-4 font-sans">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 10. RESEARCH SECTION (Mercor-style, future-looking) -->
+  <section id="research" class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4">Research</h2>
+      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm md:text-base max-w-xl mx-auto">
+        Our research agenda focuses on one question: what does design expertise actually look like as structured training data — and how do we make it legible to frontier models?
+      </p>
+    </div>
+
+    <!-- Papers grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-10">
+      <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm relative group hover:border-primary/25 transition-all">
+        <span class="absolute top-4 right-4 text-[10px] font-bold text-primary dark:text-primary-light tracking-wide uppercase bg-primary/10 px-2 py-0.5 rounded">Upcoming Paper</span>
+        <span class="text-[10px] text-neutral-400 dark:text-neutral-500 block mb-2 font-mono">Q3 2026</span>
+        <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 font-sans mb-3 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
+          The Design Judgment Gap: Why AI-generated UI fails at the edge cases that matter most
+        </h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">
+          Exploring failure patterns in current UI generation tools and documenting the quantitative delta between general human feedback and design expert preference models.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm relative group hover:border-primary/25 transition-all">
+        <span class="absolute top-4 right-4 text-[10px] font-bold text-primary dark:text-primary-light tracking-wide uppercase bg-primary/10 px-2 py-0.5 rounded">Upcoming Paper</span>
+        <span class="text-[10px] text-neutral-400 dark:text-neutral-500 block mb-2 font-mono">Q4 2026</span>
+        <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 font-sans mb-3 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
+          Rothr-DesignBench: A benchmark for evaluating AI systems on visual hierarchy, accessibility, and interaction clarity
+        </h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">
+          A standardized, public dataset of 5,000+ expert-scored interfaces designed to challenge the visual reasoning capabilities of multi-modal models.
+        </p>
+      </div>
+    </div>
+
+    <!-- Newsletter Sign up -->
+    <div class="max-w-md mx-auto mt-12 text-center">
+      <a href="/contact" class="inline-flex items-center gap-1 text-sm font-semibold text-primary dark:text-primary-light hover:underline font-sans">
+        Sign up for research updates <ArrowRight size={14} />
+      </a>
+    </div>
+  </section>
+
+  <!-- 11. FINAL CTA — DUAL PANEL -->
+  <section class="py-12 md:py-20 site-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Left Panel (Labs) -->
+      <div 
+        class="p-8 md:p-10 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/15 dark:border-neutral-800 hover:border-primary/30 transition-all duration-300 flex flex-col justify-between min-h-[260px] shadow-sm"
+        data-aos="fade-up-xs"
+        data-aos-once="true"
+      >
+        <div>
+          <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6">
+            <Landmark size={20} />
+          </div>
+          <h3 class="text-xl md:text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+            Your next design data project shouldn't start with a sourcing sprint.
+          </h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">
+            Tell us what you need. We'll have a vetted shortlist in 48 hours.
+          </p>
+        </div>
+        <div class="mt-8">
+          <Button url="https://airtable.com/appqqzliZuiI7PfV9/pagndaAdD7dCgazFF/form" type="fill" className="text-xs">
+            Get in touch &rarr;
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right Panel (Designers) -->
+      <div 
+        class="p-8 md:p-10 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-accent-light/25 dark:border-neutral-800 hover:border-accent/40 transition-all duration-300 flex flex-col justify-between min-h-[260px] shadow-sm"
+        data-aos="fade-up-xs"
+        data-aos-delay="150"
+        data-aos-once="true"
+      >
+        <div>
+          <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent dark:bg-accent/15 dark:text-accent-light flex items-center justify-center mb-6">
+            <PenTool size={20} />
+          </div>
+          <h3 class="text-xl md:text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+            Your design taste is worth more than the market currently pays.
+          </h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">
+            Join 500+ vetted experts contributing to the frontier of AI.
+          </p>
+        </div>
+        <div class="mt-8">
+          <Button url="/contact" type="outline" className="text-xs">
+            Apply as an expert &rarr;
+          </Button>
+        </div>
+      </div>
+  </section>
+
+  <style>
+    /* ─── Globe Section radial meteors animation ───────── */
+    .animate-meteor-outward {
+      animation: meteor-outward linear infinite;
     }
-  }
-</style>
+    @keyframes meteor-outward {
+      0% {
+        transform: rotate(var(--angle)) translate(0, 0) scale(0.5);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(var(--angle)) translate(320px, 0) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* ─── Job Feed Loop scrolling animation ─────────── */
+    .animate-job-scroll {
+      animation: jobFeedScroll 24s linear infinite;
+    }
+    @keyframes jobFeedScroll {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-meteor-outward,
+      .animate-job-scroll {
+        animation: none !important;
+      }
+    }
+  </style>
+
+</Layout>
