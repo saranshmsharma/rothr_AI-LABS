@@ -6,27 +6,27 @@ import { siteConfig, socialLinks } from "@/config/site.js";
 const currentYear = new Date().getFullYear();
 
 const footerLinks = {
-  intelligence: [
-    { name: "Preference Data", url: "/#preference-data" },
-    { name: "Design Evals", url: "/#design-evals" },
-    { name: "Red Teaming", url: "/#red-teaming" },
-  ],
-  designers: [
-    { name: "Apply", url: "/contact" },
-    { name: "Opportunities", url: "/contact" },
-  ],
-  labs: [
-    { name: "For Labs", url: "/#for-labs" },
-    { name: "Research", url: "/#research" },
-  ],
-  company: [
-    { name: "Mission", url: "/mission" },
-    { name: "Blog", url: "/blog" },
-  ],
-  legal: [
-    { name: "Privacy", url: "/#privacy" },
-    { name: "Terms", url: "/#terms" },
-  ],
+	intelligence: [
+		{ name: "Preference Data", url: "/#preference-data" },
+		{ name: "Design Evals", url: "/#design-evals" },
+		{ name: "Red Teaming", url: "/#red-teaming" },
+	],
+	designers: [
+    { name: "Apply", url: siteConfig.cta.expertRegister },
+    { name: "Opportunities", url: siteConfig.cta.expertRegister },
+	],
+	labs: [
+		{ name: "For Labs", url: "/#for-labs" },
+		{ name: "Research", url: "/#research" },
+	],
+	company: [
+		{ name: "Mission", url: "/mission" },
+		{ name: "Blog", url: "/blog" },
+	],
+	legal: [
+		{ name: "Privacy", url: "/#privacy" },
+		{ name: "Terms", url: "/#terms" },
+	],
 };
 
 const templateVersion = "v1.0.0";

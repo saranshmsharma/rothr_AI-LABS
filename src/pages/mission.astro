@@ -1,8 +1,9 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
 import Button from "@/components/ui/Button.astro";
-import { ArrowRight, Compass, ShieldCheck, Cpu } from "@lucide/astro";
+import { siteConfig } from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight, Compass, Cpu, ShieldCheck } from "@lucide/astro";
 ---
 
 <Layout
@@ -59,10 +60,10 @@ import { ArrowRight, Compass, ShieldCheck, Cpu } from "@lucide/astro";
         Join our growing network of vetted design experts or deploy high-fidelity evaluation signals to your engineering pipelines.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <Button url="/contact" type="fill">
+        <Button url={siteConfig.cta.partnerForm} type="fill">
           Partner with us <ArrowRight size={16} />
         </Button>
-        <Button url="/contact">
+        <Button url={siteConfig.cta.expertRegister}>
           Join as an expert
         </Button>
       </div>

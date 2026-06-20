@@ -1,0 +1,329 @@
+---
+import { siteConfig } from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import Badge from "@/components/ui/Badge.astro";
+import {
+	ArrowRight,
+	Check,
+	ClipboardList,
+	FileText,
+	MessageSquareQuote,
+	ShieldAlert,
+	Sparkles,
+	Target,
+} from "@lucide/astro";
+
+const protocolStats = [
+	{ value: "4", label: "protocol families" },
+	{ value: "12", label: "review fields" },
+	{ value: "1", label: "shared rubric" },
+	{ value: "48h", label: "target turnaround" },
+];
+
+const protocolCards = [
+	{
+		id: "preference-ranking",
+		icon: Target,
+		tag: "Ranking",
+		title: "Preference Ranking",
+		description:
+			"Compare two or more UI variants and choose the strongest one with a concise design justification.",
+		objective:
+			"Teach the model which visual and interaction patterns produce better outcomes for a given task.",
+		inputs: [
+			"Two or more candidate UI variants",
+			"Task brief and target device",
+			"Any accessibility constraints",
+		],
+		output: [
+			"Winner selection",
+			"One-line rationale",
+			"Failure notes for rejected options",
+		],
+		checks: [
+			"Hierarchy and scan path",
+			"Spacing and alignment",
+			"Clarity of affordances",
+		],
+	},
+	{
+		id: "ui-annotation",
+		icon: ClipboardList,
+		tag: "Annotation",
+		title: "UI Annotation",
+		description:
+			"Mark exactly where a layout breaks down and assign the issue to a specific category.",
+		objective:
+			"Convert visual critique into structured labels that can be learned from at scale.",
+		inputs: [
+			"Wireframe, mock, or screenshot",
+			"Annotation layer / markup tool",
+			"Failure taxonomy",
+		],
+		output: [
+			"Bounding notes or callouts",
+			"Issue category",
+			"Priority / severity score",
+		],
+		checks: [
+			"Evidence is visible in the artifact",
+			"Labels map to the rubric",
+			"No duplicate annotations",
+		],
+	},
+	{
+		id: "rationale-writing",
+		icon: FileText,
+		tag: "Writing",
+		title: "Rationale Writing",
+		description:
+			"Explain why a solution is good, not just that it looks polished.",
+		objective:
+			"Train the model on the language of expert judgment and decision making.",
+		inputs: [
+			"Selected solution or design direction",
+			"Context about the user and workflow",
+			"Review rubric",
+		],
+		output: [
+			"Short design rationale",
+			"Tradeoff summary",
+			"Next-step recommendation",
+		],
+		checks: [
+			"Rationale ties back to user goals",
+			"Reasoning is specific and testable",
+			"No generic filler language",
+		],
+	},
+	{
+		id: "red-teaming",
+		icon: ShieldAlert,
+		tag: "Stress test",
+		title: "Red Teaming",
+		description:
+			"Push a model or tool into edge cases and document where it fails.",
+		objective:
+			"Reveal brittle assumptions before the design system or agent reaches users.",
+		inputs: [
+			"Target tool or model",
+			"Failure scenarios",
+			"Expected bad behavior examples",
+		],
+		output: [
+			"Failure report",
+			"Reproduction steps",
+			"Recommended fix or guardrail",
+		],
+		checks: [
+			"Issue is reproducible",
+			"Root cause is described clearly",
+			"Mitigation is concrete",
+		],
+	},
+];
+
+const protocolWorkflow = [
+	{
+		num: "01",
+		title: "Scope the task",
+		desc: "Define the artifact, the user intent, and the review criteria before any judgment is recorded.",
+	},
+	{
+		num: "02",
+		title: "Capture evidence",
+		desc: "Annotate the exact area that supports the decision so the feedback stays grounded in the UI.",
+	},
+	{
+		num: "03",
+		title: "Write the rationale",
+		desc: "Turn visual criticism into concise, reusable reasoning that can train future behavior.",
+	},
+	{
+		num: "04",
+		title: "Verify quality",
+		desc: "Run the output against the rubric to make sure the signal is consistent and actionable.",
+	},
+];
+
+const protocolData = [
+	{
+		field: "Artifact",
+		value: "Design mock, UI screenshot, or agent-generated interface",
+	},
+	{ field: "Reviewer", value: "Senior product designer with domain match" },
+	{ field: "Primary signal", value: "Preference, annotation, rationale, or failure mode" },
+	{ field: "Quality gate", value: "Specific, reproducible, and rubric-aligned feedback" },
+	{ field: "Delivery format", value: "Structured notes, labels, or ranked output" },
+];
+---
+
+<Layout
+	title="Protocol Detail — Rothr"
+	description="A structured protocol library for preference ranking, UI annotation, rationale writing, and red teaming."
+	keywords="protocol detail, design evaluation, UI annotation, preference ranking, red teaming, rationale writing"
+>
+	<section class="site-container py-16 md:py-24">
+		<PageHeader
+			title="Protocol detail"
+			description="A shared review system for turning expert design judgment into clean training signal."
+		/>
+
+		<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+			{protocolStats.map((stat) => (
+				<div class="rounded-2xl border border-primary/10 dark:border-neutral-800 bg-bg-secondary dark:bg-bg-secondary-dark p-5 text-center shadow-sm">
+					<div class="text-3xl font-brand text-neutral-800 dark:text-neutral-100">{stat.value}</div>
+					<div class="mt-1 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">{stat.label}</div>
+				</div>
+			))}
+		</div>
+
+		<div class="mt-10 rounded-3xl border border-dashed border-primary/15 dark:border-neutral-800 bg-bg-secondary/60 dark:bg-bg-secondary-dark/60 p-6 md:p-8">
+			<div class="flex flex-wrap items-center gap-3 mb-4">
+				<Badge variant="primary">Protocol library</Badge>
+				<Badge variant="neutral">Design intelligence</Badge>
+				<Badge variant="accent">Structured feedback</Badge>
+			</div>
+			<p class="max-w-3xl text-sm md:text-base leading-7 text-neutral-600 dark:text-neutral-300">
+				Each protocol follows the same pattern: define the task, capture evidence, write the rationale, and verify the result. That consistency makes the output easier to compare, review, and train on.
+			</p>
+		</div>
+	</section>
+
+	<section class="site-container py-16 md:py-24 border-t border-dashed border-primary/10 dark:border-neutral-850">
+		<div class="max-w-3xl mx-auto text-center mb-16">
+			<h2 class="text-3xl md:text-4xl font-brand mb-4">Protocol families</h2>
+			<p class="text-sm md:text-base leading-relaxed text-neutral-600 dark:text-neutral-300">
+				The four task families below are the current core of the review system.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+			{protocolCards.map((protocol) => (
+				<article id={protocol.id} class="scroll-mt-28 rounded-3xl border border-primary/10 dark:border-neutral-800 bg-bg-secondary dark:bg-bg-secondary-dark p-6 md:p-7 shadow-sm">
+					<div class="flex items-start justify-between gap-4 mb-5">
+						<div class="flex items-center gap-3">
+							<div class="h-11 w-11 rounded-2xl bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center shrink-0">
+								<protocol.icon size={20} />
+							</div>
+							<div>
+								<Badge variant="neutral">{protocol.tag}</Badge>
+								<h3 class="mt-2 text-xl font-semibold text-neutral-800 dark:text-neutral-100">{protocol.title}</h3>
+							</div>
+						</div>
+						<div class="hidden sm:flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-primary dark:text-primary-light">
+							<Sparkles size={14} />
+							Detail
+						</div>
+					</div>
+					<p class="text-sm leading-7 text-neutral-600 dark:text-neutral-300">{protocol.description}</p>
+					<div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<div class="rounded-2xl bg-primary/5 dark:bg-primary/10 p-4 border border-primary/10 dark:border-primary/15">
+							<div class="text-xs uppercase tracking-[0.16em] text-primary dark:text-primary-light font-semibold mb-2">Objective</div>
+							<p class="text-sm leading-6 text-neutral-600 dark:text-neutral-300">{protocol.objective}</p>
+						</div>
+						<div class="rounded-2xl bg-neutral-50 dark:bg-neutral-900/30 p-4 border border-neutral-200/70 dark:border-neutral-800">
+							<div class="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400 font-semibold mb-2">Inputs</div>
+							<ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
+								{protocol.inputs.map((item) => (
+									<li class="flex gap-2"><Check size={16} class="mt-0.5 shrink-0 text-primary dark:text-primary-light" />{item}</li>
+								))}
+							</ul>
+						</div>
+					</div>
+					<div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<div>
+							<div class="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400 font-semibold mb-2">Output</div>
+							<ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
+								{protocol.output.map((item) => (
+									<li class="flex gap-2"><MessageSquareQuote size={16} class="mt-0.5 shrink-0 text-accent" />{item}</li>
+								))}
+							</ul>
+						</div>
+						<div>
+							<div class="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400 font-semibold mb-2">Quality checks</div>
+							<ul class="space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
+								{protocol.checks.map((item) => (
+									<li class="flex gap-2"><Check size={16} class="mt-0.5 shrink-0 text-green-600 dark:text-green-400" />{item}</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="site-container py-16 md:py-24 border-t border-dashed border-primary/10 dark:border-neutral-850">
+		<div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
+			<div>
+				<h2 class="text-3xl md:text-4xl font-brand mb-4">Protocol workflow</h2>
+				<p class="text-sm md:text-base leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-2xl">
+					The workflow keeps every protocol comparable, even when different designers are reviewing different artifacts.
+				</p>
+
+				<div class="mt-8 space-y-5">
+					{protocolWorkflow.map((step) => (
+						<div class="flex gap-4 rounded-2xl border border-primary/10 dark:border-neutral-800 bg-bg-secondary dark:bg-bg-secondary-dark p-5">
+							<div class="h-11 w-11 rounded-2xl bg-primary text-white flex items-center justify-center font-bold shrink-0">{step.num}</div>
+							<div>
+								<h3 class="font-semibold text-neutral-800 dark:text-neutral-100">{step.title}</h3>
+								<p class="mt-1.5 text-sm leading-6 text-neutral-600 dark:text-neutral-300">{step.desc}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<div class="rounded-3xl border border-dashed border-primary/15 dark:border-neutral-800 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70 p-6 md:p-8">
+				<div class="flex items-center gap-2 mb-5 text-primary dark:text-primary-light uppercase tracking-[0.18em] text-xs font-semibold">
+					<FileText size={14} />
+					Data model
+				</div>
+				<div class="overflow-hidden rounded-2xl border border-neutral-200/70 dark:border-neutral-800">
+					<table class="w-full text-sm">
+						<thead class="bg-neutral-50 dark:bg-neutral-900/60">
+							<tr>
+								<th class="text-left px-4 py-3 font-semibold text-neutral-600 dark:text-neutral-300">Field</th>
+								<th class="text-left px-4 py-3 font-semibold text-neutral-600 dark:text-neutral-300">Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							{protocolData.map((row, index) => (
+								<tr class={index % 2 === 0 ? "bg-white dark:bg-neutral-950/40" : "bg-neutral-50/70 dark:bg-neutral-900/30"}>
+									<td class="px-4 py-3 font-medium text-neutral-700 dark:text-neutral-200">{row.field}</td>
+									<td class="px-4 py-3 text-neutral-500 dark:text-neutral-400">{row.value}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+				<div class="mt-6 rounded-2xl bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/15 p-5">
+					<h3 class="font-semibold text-neutral-800 dark:text-neutral-100 mb-2">Review rule</h3>
+					<p class="text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+						If the output cannot be traced back to a visible artifact, a clear rubric item, or a reproducible failure, it should be revised before acceptance.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="site-container py-16 md:py-24 border-t border-dashed border-primary/10 dark:border-neutral-850">
+		<div class="rounded-3xl bg-neutral-900 text-white p-8 md:p-10 overflow-hidden relative">
+			<div class="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-accent/10 pointer-events-none"></div>
+			<div class="relative z-10 max-w-3xl">
+				<Badge variant="accent">Ready to review</Badge>
+				<h2 class="mt-4 text-3xl md:text-4xl font-brand">Use the protocol library as your operating system for design signal.</h2>
+				<p class="mt-4 text-sm md:text-base leading-7 text-white/75">
+					Share this page with your team when you need a repeatable way to rank UI outputs, annotate issues, and write sharper design rationale.
+				</p>
+				<div class="mt-6 flex flex-wrap gap-4">
+					<Button url={siteConfig.cta.partnerForm} type="fill" className="inline-flex items-center gap-2">Talk to Rothr <ArrowRight size={16} /></Button>
+					<Button url="/#red-teaming" type="outline" className="inline-flex items-center gap-2">View related section <ArrowRight size={16} /></Button>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

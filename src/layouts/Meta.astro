@@ -1,45 +1,61 @@
 ---
-import { siteConfig } from '@/config/site.js';
+import { siteConfig } from "@/config/site.js";
 export interface Props {
-  title?: string;
-  description?: string;
-  keywords?: string;
-  url?: string;
-  ogImage?: string;
-  twitterHandle?: string;
+	title?: string;
+	description?: string;
+	keywords?: string;
+	url?: string;
+	ogImage?: string;
+	twitterHandle?: string;
+	robots?: string;
 }
 
 const {
-  title,
-  description,
-  keywords = "",
-  url = siteConfig.url, //
-  ogImage = "/og.jpg",
-  twitterHandle = siteConfig.social.twitterName || '',
+	title,
+	description,
+	keywords = "",
+	url = siteConfig.url, //
+	ogImage = "/og.jpg",
+	twitterHandle = siteConfig.social.twitterName || "",
+	robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
 } = Astro.props;
 ---
 
 <!-- Meta Tags -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/svg+xml" href="/favicon.png" />
-<title>{title}</title>
-<meta name="description" content={description} />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+<title>{title || siteConfig.meta.title}</title>
+<meta name="description" content={description || siteConfig.meta.description} />
 <meta name="keywords" content={keywords} />
 <meta name="author" content={siteConfig.author} />
+<link rel="canonical" href={url} />
+<meta name="robots" content={robots} />
+<meta name="googlebot" content={robots} />
 
 <!-- Open Graph Tags -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={title || siteConfig.meta.title} />
+<meta property="og:description" content={description || siteConfig.meta.description} />
 <meta property="og:url" content={url} />
-<meta property="og:image" content={ogImage} />
-<meta property="og:site_name" content={title} />
+<meta property="og:image" content={ogImage || siteConfig.meta.image} />
+<meta property="og:image:alt" content={title || siteConfig.meta.title} />
+<meta property="og:site_name" content={siteConfig.meta.title} />
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: siteConfig.title,
+	url: siteConfig.url,
+	logo: `${siteConfig.url}/favicon.png`,
+	sameAs: [siteConfig.social.twitter, siteConfig.social.github],
+})} />
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:title" content={title || siteConfig.meta.title} />
+<meta name="twitter:description" content={description || siteConfig.meta.description} />
+<meta name="twitter:image" content={ogImage || siteConfig.meta.image} />
 <meta name="twitter:site" content={twitterHandle} />
 <meta name="twitter:creator" content={twitterHandle} />

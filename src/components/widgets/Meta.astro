@@ -8,19 +8,24 @@ interface Props {
 	url?: string;
 	image?: string;
 	twitterHandle?: string;
+	robots?: string;
 }
 
 const {
-  title = siteConfig.meta.title,
-  description = siteConfig.meta.description,
-  keywords = siteConfig.meta.keywords,
-  url = siteConfig.url,
-  image = siteConfig.meta.image,
-  twitterHandle = siteConfig.social.twitterName,
+	title = siteConfig.meta.title,
+	description = siteConfig.meta.description,
+	keywords = siteConfig.meta.keywords,
+	url = siteConfig.url,
+	image = siteConfig.meta.image,
+	twitterHandle = siteConfig.social.twitterName,
+	robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
 } = Astro.props;
 
 // 构建完整的页面标题
-const metaTitle = title === siteConfig.meta.title ? title : `${title} | ${siteConfig.meta.title}`;
+const metaTitle =
+	title === siteConfig.meta.title
+		? title
+		: `${title} | ${siteConfig.meta.title}`;
 const metaDescription = description || siteConfig.meta.description;
 const ogImage = image || siteConfig.meta.image;
 const canonicalUrl = url || siteConfig.url;
@@ -51,7 +56,7 @@ const canonicalUrl = url || siteConfig.url;
 <meta name="twitter:creator" content={twitterHandle} />
 
 <!-- Additional Meta Tags -->
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={robots} />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="UTF-8" />
 

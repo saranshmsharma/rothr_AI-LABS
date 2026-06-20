@@ -1,13 +1,21 @@
 ---
-import { Moon, SunMedium, ChevronDown, ChevronRight, Menu, X } from "@lucide/astro";
 import menusImport from "@/collections/menu.json";
 import Button from "@/components/ui/Button.astro";
 import Logo from "@/components/ui/Logo.astro";
+import { siteConfig } from "@/config/site";
+import {
+	ChevronDown,
+	ChevronRight,
+	Menu,
+	Moon,
+	SunMedium,
+	X,
+} from "@lucide/astro";
 
 interface MenuItem {
-  name: string;
-  url?: string;
-  children?: { name: string; url: string }[];
+	name: string;
+	url?: string;
+	children?: { name: string; url: string }[];
 }
 
 const menus = menusImport as MenuItem[];
@@ -143,7 +151,7 @@ const menus = menusImport as MenuItem[];
 
         <!-- CTA Button (Mobile) -->
         <div class="relative z-10 w-full px-5 mt-3 sm:hidden">
-          <Button url="/contact" type="fill" className="m-auto w-full justify-center ">
+          <Button url={siteConfig.cta.partnerForm} type="fill" className="m-auto w-full justify-center ">
                     Get in touch
           </Button>
         </div>
@@ -152,7 +160,7 @@ const menus = menusImport as MenuItem[];
       <!-- Desktop Actions -->
       <div class="relative hidden sm:flex items-center gap-2 ml-4 lg:ml-6">
         <!-- CTA Button (Desktop) -->
-        <Button url="/contact" type="fill" className="md:flex mx-1">
+        <Button url={siteConfig.cta.partnerForm} type="fill" className="md:flex mx-1">
                    Get in touch
         </Button>
 

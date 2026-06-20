@@ -1,24 +1,44 @@
 ---
-import Button from "@/components/ui/Button.astro";
-import Badge from "@/components/ui/Badge.astro";
 import AnimatedText from "@/components/ui/AnimatedText.astro";
+import Badge from "@/components/ui/Badge.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
 import { ArrowRight, ChartColumn } from "@lucide/astro";
 
 const stats = [
-  { label: "Active users", value: "12,438", delta: "+24.5%", cycle: ["12,438", "12,441", "12,447", "12,453"] },
-  { label: "Sessions",     value: "8,291",  delta: "+12.1%", cycle: ["8,291", "8,296", "8,302", "8,309"] },
-  { label: "Revenue",      value: "$24.5k", delta: "+18.2%", cycle: ["$24.5k", "$24.6k", "$24.7k", "$24.8k"] },
-  { label: "Conversion",   value: "4.8%",   delta: "+0.6%",  cycle: ["4.8%", "4.9%", "5.0%", "4.9%"] },
+	{
+		label: "Active users",
+		value: "12,438",
+		delta: "+24.5%",
+		cycle: ["12,438", "12,441", "12,447", "12,453"],
+	},
+	{
+		label: "Sessions",
+		value: "8,291",
+		delta: "+12.1%",
+		cycle: ["8,291", "8,296", "8,302", "8,309"],
+	},
+	{
+		label: "Revenue",
+		value: "$24.5k",
+		delta: "+18.2%",
+		cycle: ["$24.5k", "$24.6k", "$24.7k", "$24.8k"],
+	},
+	{
+		label: "Conversion",
+		value: "4.8%",
+		delta: "+0.6%",
+		cycle: ["4.8%", "4.9%", "5.0%", "4.9%"],
+	},
 ];
 
 const bars = [32, 48, 40, 64, 56, 80, 72];
 const barCycles = JSON.stringify([
-  [32, 48, 40, 64, 56, 80, 72],
-  [38, 42, 50, 58, 64, 72, 86],
-  [28, 54, 44, 68, 50, 76, 80],
-  [42, 46, 38, 60, 62, 84, 70],
+	[32, 48, 40, 64, 56, 80, 72],
+	[38, 42, 50, 58, 64, 72, 86],
+	[28, 54, 44, 68, 50, 76, 80],
+	[42, 46, 38, 60, 62, 84, 70],
 ]);
 ---
 

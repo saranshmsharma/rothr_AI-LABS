@@ -1,121 +1,187 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
 import {
-  ArrowRight, Users, Check, Zap, Sparkles,
-  Layers, Database, Eye, Shield, Award, Landmark, Clock, DollarSign,
-  TrendingUp, ArrowUpRight, Target, Search, EyeOff, PenTool, Briefcase,
-  Globe as U
+	ArrowRight,
+	ArrowUpRight,
+	Award,
+	Briefcase,
+	Check,
+	Clock,
+	Database,
+	DollarSign,
+	Eye,
+	EyeOff,
+	Landmark,
+	Layers,
+	PenTool,
+	Search,
+	Shield,
+	Sparkles,
+	Target,
+	TrendingUp,
+	Globe as U,
+	Users,
+	Zap,
 } from "@lucide/astro";
 
 // Stats bar data
 const statsBar = [
-  { value: "500+", label: "Vetted design experts" },
-  { value: "6", label: "Design domains" },
-  { value: "48hr", label: "Expert deployment" },
-  { value: "$75", label: "Avg. hourly rate" },
+	{ value: "500+", label: "Vetted design experts" },
+	{ value: "6", label: "Design domains" },
+	{ value: "48hr", label: "Expert deployment" },
+	{ value: "$75", label: "Avg. hourly rate" },
 ];
 
 // Product Pillars data
 const productPillars = [
-  {
-    id: "preference-data",
-    icon: Database,
-    title: "Preference Data",
-    desc: "Senior designers rank and explain AI-generated UI outputs to generate RLHF training pairs grounded in real design reasoning."
-  },
-  {
-    id: "design-evals",
-    icon: Eye,
-    title: "Design Evals",
-    desc: "Structured evaluation environments where expert designers assess model outputs against accessibility, hierarchy, interaction, and craft standards."
-  },
-  {
-    id: "red-teaming",
-    icon: Shield,
-    title: "Red Teaming",
-    desc: "Designers surface failure modes in AI design tools and agents — with the vocabulary to document why the output fails and how to fix it."
-  }
+	{
+		id: "preference-data",
+		icon: Database,
+		title: "Preference Data",
+		desc: "Senior designers rank and explain AI-generated UI outputs to generate RLHF training pairs grounded in real design reasoning.",
+	},
+	{
+		id: "design-evals",
+		icon: Eye,
+		title: "Design Evals",
+		desc: "Structured evaluation environments where expert designers assess model outputs against accessibility, hierarchy, interaction, and craft standards.",
+	},
+	{
+		id: "red-teaming",
+		icon: Shield,
+		title: "Red Teaming",
+		desc: "Designers surface failure modes in AI design tools and agents — with the vocabulary to document why the output fails and how to fix it.",
+	},
 ];
 
 // Problem Cards
 const labsProblems = [
-  {
-    icon: Target,
-    title: "Wrong domain, wrong signal",
-    desc: "General annotators describe what they see. Senior designers explain why it fails. The difference is the training signal your model actually needs."
-  },
-  {
-    icon: Search,
-    title: "No design-specific vetting exists",
-    desc: "Current platforms can't distinguish a 6-year enterprise UX designer from someone who completed an online course last month. You're getting noise."
-  },
-  {
-    icon: Clock,
-    title: "Months to source, days to lose",
-    desc: "By the time you've sourced, vetted, and onboarded design talent through generalist platforms, your training window has closed."
-  }
+	{
+		icon: Target,
+		title: "Wrong domain, wrong signal",
+		desc: "General annotators describe what they see. Senior designers explain why it fails. The difference is the training signal your model actually needs.",
+	},
+	{
+		icon: Search,
+		title: "No design-specific vetting exists",
+		desc: "Current platforms can't distinguish a 6-year enterprise UX designer from someone who completed an online course last month. You're getting noise.",
+	},
+	{
+		icon: Clock,
+		title: "Months to source, days to lose",
+		desc: "By the time you've sourced, vetted, and onboarded design talent through generalist platforms, your training window has closed.",
+	},
 ];
 
 const designersProblems = [
-  {
-    icon: EyeOff,
-    title: "You're invisible to the AI training economy",
-    desc: "RLHF platforms weren't built for designers. Your domain doesn't map to their categories. Your expertise isn't captured."
-  },
-  {
-    icon: DollarSign,
-    title: "Expert judgment, annotator rates",
-    desc: "Platforms that do accept designers pay crowd wages. Six years of UX reasoning is worth more than the market currently offers."
-  },
-  {
-    icon: Layers,
-    title: "No infrastructure built for you",
-    desc: "There's no vetted path from senior designer to AI training contributor. The demand exists. The on-ramp doesn't — until now."
-  }
+	{
+		icon: EyeOff,
+		title: "You're invisible to the AI training economy",
+		desc: "RLHF platforms weren't built for designers. Your domain doesn't map to their categories. Your expertise isn't captured.",
+	},
+	{
+		icon: DollarSign,
+		title: "Expert judgment, annotator rates",
+		desc: "Platforms that do accept designers pay crowd wages. Six years of UX reasoning is worth more than the market currently offers.",
+	},
+	{
+		icon: Layers,
+		title: "No infrastructure built for you",
+		desc: "There's no vetted path from senior designer to AI training contributor. The demand exists. The on-ramp doesn't — until now.",
+	},
 ];
 
 // How It Works
 const labsSteps = [
-  { num: "01", title: "Tell us what you need", desc: "Share your task type, design domain, volume, and timeline. Self-service or through our team." },
-  { num: "02", title: "Get a vetted shortlist in 48 hours", desc: "We match and surface verified design experts against your specific requirements. No sourcing on your end." },
-  { num: "03", title: "Deploy into your environment", desc: "Experts work inside your annotation tools or Rothr's structured task workspace. No migrations, no lock-in." },
-  { num: "04", title: "Scale with confidence", desc: "Start with a 5-person pilot. Scale to production teams of 50+ with the same vetting quality and structured output format." }
+	{
+		num: "01",
+		title: "Tell us what you need",
+		desc: "Share your task type, design domain, volume, and timeline. Self-service or through our team.",
+	},
+	{
+		num: "02",
+		title: "Get a vetted shortlist in 48 hours",
+		desc: "We match and surface verified design experts against your specific requirements. No sourcing on your end.",
+	},
+	{
+		num: "03",
+		title: "Deploy into your environment",
+		desc: "Experts work inside your annotation tools or Rothr's structured task workspace. No migrations, no lock-in.",
+	},
+	{
+		num: "04",
+		title: "Scale with confidence",
+		desc: "Start with a 5-person pilot. Scale to production teams of 50+ with the same vetting quality and structured output format.",
+	},
 ];
 
 const designersSteps = [
-  { num: "01", title: "Apply in 10 minutes", desc: "Tell us your domain, seniority, and what kinds of tasks you want. No portfolio required." },
-  { num: "02", title: "Complete a reasoning assessment", desc: "We evaluate design judgment, not aesthetics. One test. No tricks." },
-  { num: "03", title: "Get matched to tasks", desc: "Rothr surfaces relevant work from labs that fit your background and schedule. You decide what to accept." },
-  { num: "04", title: "Get paid", desc: "Get paid $40–120/hr for async sessions of 30–90 minutes. Milestone-based. Transparent before you start." }
+	{
+		num: "01",
+		title: "Apply in 10 minutes",
+		desc: "Tell us your domain, seniority, and what kinds of tasks you want. No portfolio required.",
+	},
+	{
+		num: "02",
+		title: "Complete a reasoning assessment",
+		desc: "We evaluate design judgment, not aesthetics. One test. No tricks.",
+	},
+	{
+		num: "03",
+		title: "Get matched to tasks",
+		desc: "Rothr surfaces relevant work from labs that fit your background and schedule. You decide what to accept.",
+	},
+	{
+		num: "04",
+		title: "Get paid",
+		desc: "Get paid $40–120/hr for async sessions of 30–90 minutes. Milestone-based. Transparent before you start.",
+	},
 ];
 
 // Task Types
 const taskTypes = [
-  { title: "Preference Ranking", desc: "Compare two AI-generated UI variants. Choose the stronger one and explain your reasoning in design terms." },
-  { title: "UI Annotation", desc: "Mark specific failures in hierarchy, visual weight, accessibility, and interaction clarity on wireframes or mocks." },
-  { title: "Rationale Writing", desc: "Write structured design rationale that helps models learn what good looks like — and why." },
-  { title: "Red Teaming", desc: "Push AI design tools to their failure modes. Document what breaks, how it breaks, and what the right output should be." }
+	{
+    id: "preference-ranking",
+		title: "Preference Ranking",
+		desc: "Compare two AI-generated UI variants. Choose the stronger one and explain your reasoning in design terms.",
+	},
+	{
+    id: "ui-annotation",
+		title: "UI Annotation",
+		desc: "Mark specific failures in hierarchy, visual weight, accessibility, and interaction clarity on wireframes or mocks.",
+	},
+	{
+    id: "rationale-writing",
+		title: "Rationale Writing",
+		desc: "Write structured design rationale that helps models learn what good looks like — and why.",
+	},
+	{
+    id: "red-teaming",
+		title: "Red Teaming",
+		desc: "Push AI design tools to their failure modes. Document what breaks, how it breaks, and what the right output should be.",
+	},
 ];
 
 // Domains
 const domains = [
-  { name: "Enterprise / B2B UX", icon: Landmark },
-  { name: "Consumer Product Design", icon: Users },
-  { name: "Design Systems & Tokens", icon: Layers },
-  { name: "Accessibility & Inclusive Design", icon: Award },
-  { name: "Fintech & Complex Data Workflows", icon: Database },
-  { name: "AI-native Product Interfaces", icon: Zap }
+	{ name: "Enterprise / B2B UX", icon: Landmark },
+	{ name: "Consumer Product Design", icon: Users },
+	{ name: "Design Systems & Tokens", icon: Layers },
+	{ name: "Accessibility & Inclusive Design", icon: Award },
+	{ name: "Fintech & Complex Data Workflows", icon: Database },
+	{ name: "AI-native Product Interfaces", icon: Zap },
 ];
 
 // Stats Credibility Section
 const credibilityStats = [
-  { value: "500+", label: "Vetted design experts across 6 domains" },
-  { value: "48hr", label: "From project post to expert shortlist" },
-  { value: "$40–120/hr", label: "Expert earnings per session" },
-  { value: "10 min", label: "Designer application time" },
-  { value: "5→50+", label: "Pilot to production scaling" },
-  { value: "0", label: "Platforms you need to replace" }
+	{ value: "500+", label: "Vetted design experts across 6 domains" },
+	{ value: "48hr", label: "From project post to expert shortlist" },
+	{ value: "$40–120/hr", label: "Expert earnings per session" },
+	{ value: "10 min", label: "Designer application time" },
+	{ value: "5→50+", label: "Pilot to production scaling" },
+	{ value: "0", label: "Platforms you need to replace" },
 ];
 ---
 
@@ -168,10 +234,10 @@ const credibilityStats = [
         data-aos-delay="300"
         data-aos-once="true"
       >
-        <Button url="https://airtable.com/appqqzliZuiI7PfV9/pagndaAdD7dCgazFF/form" type="fill" className="text-base px-8 py-3.5 flex items-center gap-2">
+        <Button url={siteConfig.cta.partnerForm} type="fill" className="text-base px-8 py-3.5 flex items-center gap-2">
           Partner with us <ArrowRight size={16} />
         </Button>
-        <Button url="/contact" type="outline" className="text-base px-8 py-3.5">
+        <Button url={siteConfig.cta.expertRegister} type="outline" className="text-base px-8 py-3.5">
           Join as an expert
         </Button>
       </div>
@@ -588,7 +654,7 @@ if (!container) {
       <!-- Decorative giant quote icon -->
       <span class="absolute top-4 right-8 text-8xl text-primary/5 font-serif select-none">“</span>
       
-      <h3 class="text-xs uppercase tracking-widest text-primary dark:text-primary-light font-bold mb-6 font-sans">A note from Saransh</h3>
+      <h3 class="text-xs uppercase tracking-widest text-primary dark:text-primary-light font-bold mb-6 font-sans">A note from Founder</h3>
       
       <div class="space-y-6 text-neutral-700 dark:text-neutral-300 text-sm sm:text-base leading-relaxed font-sans font-medium">
         <p>
@@ -764,7 +830,7 @@ if (!container) {
             <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Preference Ranking</h3>
             <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Compare two AI-generated UI variants. Choose the stronger one and explain your reasoning in design terms.</p>
           </div>
-          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+          <a href="/protocol#preference-ranking" class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></a>
         </div>
       </div>
 
@@ -790,7 +856,7 @@ if (!container) {
             <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">UI Annotation</h3>
             <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Mark specific failures in hierarchy, visual weight, accessibility, and interaction clarity on wireframes or mocks.</p>
           </div>
-          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+          <a href="/protocol#ui-annotation" class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></a>
         </div>
       </div>
 
@@ -816,13 +882,13 @@ if (!container) {
             <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Rationale Writing</h3>
             <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Write structured design rationale that helps models learn what good looks like — and why.</p>
           </div>
-          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+          <a href="/protocol#rationale-writing" class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></a>
         </div>
       </div>
 
       <!-- Card 4: Red Teaming -->
       <div
-        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+        class="rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/70 dark:border-neutral-800 shadow-sm hover:border-primary/20 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
         data-aos="fade-up"
         data-aos-delay="240"
         data-aos-once="true"
@@ -834,7 +900,7 @@ if (!container) {
             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             loading="lazy"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/92 via-black/10 to-transparent"></div>
           <span class="absolute top-3 left-3 inline-flex w-7 h-7 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold border border-primary/30">04</span>
         </div>
         <div class="p-5 flex flex-col flex-1 justify-between">
@@ -842,7 +908,7 @@ if (!container) {
             <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-2 font-sans">Red Teaming</h3>
             <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed font-sans">Push AI design tools to their failure modes. Document what breaks, how it breaks, and what the right output should be.</p>
           </div>
-          <span class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline cursor-pointer inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></span>
+          <a href="/protocol#red-teaming" class="text-[10px] font-bold tracking-wider text-primary dark:text-primary-light uppercase mt-4 hover:underline inline-flex items-center gap-1">Protocol detail <ArrowUpRight size={10} /></a>
         </div>
       </div>
     </div>
@@ -851,22 +917,23 @@ if (!container) {
 
 
   <!-- 7. DOMAINS -->
-  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850 bg-neutral-50/50 dark:bg-neutral-900/10 rounded-3xl">
-    <div class="max-w-3xl mx-auto text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4">Six domains. One standard of expertise.</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-sm text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto">
-        <p class="border-r-0 md:border-r border-dashed border-neutral-300 dark:border-neutral-700 pr-0 md:pr-4">
-          <strong class="text-neutral-800 dark:text-neutral-200 block mb-1">For labs</strong>
+  <section class="py-16 md:py-24 site-container border-t border-dashed border-primary/10 dark:border-neutral-850 rounded-3xl relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1652879490258-736dd06ec0dd?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="max-w-3xl mx-auto text-center mb-12 relative z-10">
+      <h2 class="text-3xl md:text-4xl font-brand mb-4 !text-white">Six domains. One standard of expertise.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-sm text-neutral-300 max-w-2xl mx-auto">
+        <p class="border-r-0 md:border-r border-dashed border-neutral-400 dark:border-neutral-600 pr-0 md:pr-4">
+          <strong class="text-white block mb-1">For labs</strong>
           Filter your expert pool by the design domain closest to your model's use case.
         </p>
         <p class="pl-0 md:pl-4">
-          <strong class="text-neutral-800 dark:text-neutral-200 block mb-1">For designers</strong>
+          <strong class="text-white block mb-1">For designers</strong>
           Your specialty is the signal. We match it to the labs that need it most.
         </p>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10 relative z-10">
       {domains.map((dom) => (
         <div class="flex items-center gap-4 p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-800 shadow-sm hover:border-primary/25 transition-colors">
           <span class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-primary-light flex items-center justify-center shrink-0">
@@ -938,7 +1005,7 @@ if (!container) {
 
     <!-- Newsletter Sign up -->
     <div class="max-w-md mx-auto mt-12 text-center">
-      <a href="/contact" class="inline-flex items-center gap-1 text-sm font-semibold text-primary dark:text-primary-light hover:underline font-sans">
+      <a href={siteConfig.cta.partnerForm} class="inline-flex items-center gap-1 text-sm font-semibold text-primary dark:text-primary-light hover:underline font-sans">
         Sign up for research updates <ArrowRight size={14} />
       </a>
     </div>
@@ -965,7 +1032,7 @@ if (!container) {
           </p>
         </div>
         <div class="mt-8">
-          <Button url="https://airtable.com/appqqzliZuiI7PfV9/pagndaAdD7dCgazFF/form" type="fill" className="text-xs">
+          <Button url={siteConfig.cta.partnerForm} type="fill" className="text-xs">
             Get in touch &rarr;
           </Button>
         </div>
@@ -990,7 +1057,7 @@ if (!container) {
           </p>
         </div>
         <div class="mt-8">
-          <Button url="/contact" type="outline" className="text-xs">
+          <Button url={siteConfig.cta.expertRegister} type="outline" className="text-xs">
             Apply as an expert &rarr;
           </Button>
         </div>

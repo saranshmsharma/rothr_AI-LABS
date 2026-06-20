@@ -1,42 +1,64 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, Bug, Clock3, GitFork, LifeBuoy, Mail, MessageSquare, Send, Sparkles } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import {
+	ArrowRight,
+	Bug,
+	Clock3,
+	GitFork,
+	LifeBuoy,
+	Mail,
+	MessageSquare,
+	Send,
+	Sparkles,
+} from "@lucide/astro";
 
 const contactTopics = [
-  { value: "general", label: "General inquiry" },
-  { value: "sales", label: "Sales / pricing" },
-  { value: "partnership", label: "Partnership" },
-  { value: "support", label: "Customer support" },
-  { value: "bug", label: "Bug report" },
+	{ value: "general", label: "General inquiry" },
+	{ value: "sales", label: "Sales / pricing" },
+	{ value: "partnership", label: "Partnership" },
+	{ value: "support", label: "Customer support" },
+	{ value: "bug", label: "Bug report" },
 ];
 
 const channels = [
-  {
-    icon: Mail,
-    label: "Email",
-    text: siteConfig.mail,
-    href: `mailto:${siteConfig.mail}`,
-  },
-  {
-    icon: GitFork,
-    label: "GitHub",
-    text: "Open an issue",
-    href: siteConfig.social.github,
-  },
-  {
-    icon: MessageSquare,
-    label: "Twitter",
-    text: `@${siteConfig.social.twitterName}`,
-    href: siteConfig.social.twitter,
-  },
+	{
+		icon: Mail,
+		label: "Email",
+		text: siteConfig.mail,
+		href: `mailto:${siteConfig.mail}`,
+	},
+	{
+		icon: GitFork,
+		label: "GitHub",
+		text: "Open an issue",
+		href: siteConfig.social.github,
+	},
+	{
+		icon: MessageSquare,
+		label: "Twitter",
+		text: `@${siteConfig.social.twitterName}`,
+		href: siteConfig.social.twitter,
+	},
 ];
 
 const expectations = [
-  { icon: Clock3, title: "Reply window", desc: "Most messages get a response within 1 business day." },
-  { icon: LifeBuoy, title: "Support context", desc: "Share your page, browser, and a short reproduction when reporting issues." },
-  { icon: Bug, title: "Template note", desc: "This form is UI-only until you connect your own backend." },
+	{
+		icon: Clock3,
+		title: "Reply window",
+		desc: "Most messages get a response within 1 business day.",
+	},
+	{
+		icon: LifeBuoy,
+		title: "Support context",
+		desc: "Share your page, browser, and a short reproduction when reporting issues.",
+	},
+	{
+		icon: Bug,
+		title: "Template note",
+		desc: "This form is UI-only until you connect your own backend.",
+	},
 ];
 ---
 

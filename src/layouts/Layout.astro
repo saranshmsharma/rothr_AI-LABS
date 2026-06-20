@@ -1,36 +1,36 @@
 ---
-import Meta from './Meta.astro';
-import TopBg from "@/components/ui/TopBg.astro";
+import { siteConfig } from "@/config/site";
 import Footer from "@/components/sections/Footer.astro";
 import Header from "@/components/sections/Header.astro";
+import TopBg from "@/components/ui/TopBg.astro";
 import TrackGa from "@/components/widgets/TrackGa.astro";
+import Meta from "./Meta.astro";
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	keywords?: string | undefined;
+  robots?: string | undefined;
 }
 
-const {
-	title,
-	description,
-	keywords
-} = Astro.props;
-
+const { title, description, keywords, robots } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).toString();
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
 import "../styles/aos-custom.css";
-import '../styles/article.css';
-import '../styles/article-enhancements.css';
+import "../styles/article.css";
+import "../styles/article-enhancements.css";
 ---
 
-<html lang="">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <Meta
-      title = {title}
-      description = {description}
-      keywords = {keywords}
+      title={title}
+      description={description}
+      keywords={keywords}
+      url={canonicalUrl}
+      robots={robots}
     />
     <TrackGa />
     <!-- Used to add dark mode right away, adding here prevents any flicker -->
@@ -44,8 +44,6 @@ import '../styles/article-enhancements.css';
         }
       }
     </script>
-
-    <link rel="icon" type="image/x-icon" href="/favicon.png" />
   </head>
   <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
     <TopBg />
